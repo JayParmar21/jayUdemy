@@ -1,0 +1,327 @@
+.col {
+    margin-left: 20px;
+    color: snow;
+}
+
+.coursebycatidimg {
+    width: 200px;
+    height: 200px;
+}
+
+.Btnstyle {
+    float: left;
+    margin-top: 20px;
+    margin-left: 10%
+}
+.row{
+     display: flex;
+    flex-wrap: wrap;
+}
+.div1 {
+    background: darkred;
+    height: 160px;
+    color: antiquewhite;
+    text-align: left;
+}
+
+.Button {
+    float: right;
+    color: white;
+    width: 10%;
+    margin-top: 55px;
+    margin-right: 45px;
+}
+
+.h4 {
+    margin-left: 117px;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.headerimg {
+    margin-left: 1px;
+    height: 35px;
+    width: 35px;
+}
+
+.logo {
+    margin-left: 5px;
+    font-family: sans-serif;
+    color: darkslategrey;
+}
+
+.cat {
+    display: inline;
+    margin-left: 5px;
+}
+
+.display {
+    display: inline
+}
+
+.ddtoggle {
+    background: white;
+    color: black;
+}
+
+.igroup {
+    width: 450px;
+    margin-left: 10px;
+    margin-top: 8px;
+}
+
+/* =======Bought Course======= */
+
+.ratings {
+    margin-top: 30px;
+    margin-right: 15px;
+}
+
+.div2 {
+    padding: 4px;
+}
+
+.mediaBody {
+    text-align: left;
+    margin-left: 40px;
+    margin-top: 20px;
+    cursor: pointer
+}
+
+.marginTop {
+    margin-top: 20px;
+}
+
+.marginRates {
+    margin-top: 30px;
+}
+
+.container {
+    margin-top: 40px
+}
+
+.buttons {
+    float: right;
+    margin-left: 5px
+}
+
+.column {
+    width: 250px;
+    margin-left: 30px;
+}
+
+.card {
+    width: 250px;
+    height: 330px;
+}
+
+.carddetail {
+    padding: 0px;
+}
+
+.imgCard {
+    width: 100%;
+    height: 150px
+}
+
+.btnBack {
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.courseContent {
+    display: flex;
+    margin-left: 120px;
+    margin-top: 20px;
+}
+
+.lect {
+    margin-left: 15%;
+    margin-top: 2px;
+}
+
+.frame {
+    width: 450px;
+    height: 500px;
+}
+
+.docstyle {
+    width: 100%;
+    height: 100%
+}
+
+.headerCat {
+    background: white;
+    color: black;
+}
+
+.navItem {
+    margin-right: 15px;
+}
+
+.navLink {
+    margin-left: 5px;
+}
+
+.cartimage {
+    height: 30px;
+    width: 30px;
+}
+
+.totalcart {
+    color: red;
+    margin-right: 20px;
+    border-radius: 50%;
+    background: pink
+}
+
+.marginLogin {
+    margin-top: 7px
+}
+
+.ddlogout {
+    display: inline
+}
+
+.hrelative {
+    position: relative;
+}
+
+.homediv {
+    position: absolute;
+    left: 5%;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+}
+
+.chphead {
+    font-size: 17px
+}
+
+.chperror {
+    color: red;
+    font-size: 12px
+}
+
+.doc {
+    font-style: oblique;
+    font-size: medium
+}
+
+.chpcontainer {
+    margin-top: 30px;
+    width: 50%;
+    box-shadow: 4px 2px 4px 2px;
+    color: grey
+}
+
+.dddisplay {
+    display: none;
+}
+
+.courseimg {
+    height: 100px;
+    width: 100px
+}
+
+.courseimgdelete {
+    margin-bottom: 80px;
+    margin-left: -20px;
+    opacity: 0.7;
+    height: 25px;
+    width: 25px
+}
+
+.mediab {
+    text-align: left;
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+.mar {
+    margin-top: 30px;
+    margin-right: 15px
+}
+
+.addCart {
+    float: right;
+    margin-top: 30px;
+    margin-right: 15px
+}
+
+.mbody {
+    text-align: left;
+    margin-left: 40px;
+}
+
+.btnmycourse {
+    margin-top: 30px;
+    margin-right: 15px
+}
+
+.btnnewcourse {
+    margin-top: 30px;
+    float: left;
+}
+
+.cnt {
+    margin-top: 60px;
+}
+
+.loginmodel {
+    width: 400px
+}
+
+.signuplink {
+    cursor: pointer;
+    color: #007bff;
+}
+
+.searchNav {
+    position: relative;
+}
+
+.searchResult {
+    position: absolute;
+    width: 95%;
+    background-color: whitesmoke;
+    z-index: 2;
+}
+
+.inp {
+    width: 450px;
+    margin-left: 10px;
+    margin-top: 8px
+}
+
+.searchIcon {
+    margin-left: 2px;
+    height: 38px;
+    width: 38px
+}
+.abc{
+     display: block;
+     width: 100%;
+}
+.abc1{
+    display: inline-block;
+    width: 25%;
+    margin-bottom:1%;
+}
+.courb{
+    display:block;
+    width: 100% ;
+    height: 520px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.bg-image{
+    filter: blur(8px);
+  -webkit-filter: blur(2px);
+  background-size: cover;
+}
