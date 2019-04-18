@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import './App.css';
 import Header from './component/Header/header';
-//import CRoute from './component/CustomRoute/customRoute';
+import CRoute from './component/CustomeRoute/customeroute';
 import HomePage from './component/HomePage/hompage';
 import MyCourse from './component/Instructor/myCourse'
 import AddCourse from './component/Instructor/addCourse'
@@ -10,6 +10,8 @@ import AddChapter from './component/Instructor/addChapter'
 import CourseList from './component/Instructor/courseList'
 import CourseByCID from './component/CourseByCatID/CourseByCatID'
 import ExploreCourse from './component/CourseByCatID/ExploreCourse'
+import Cart from './component/Cart/cart'
+import BoughtCourse from './component/BoughtCourse/boughtCourse'
 
 class App extends Component {
   render() {
@@ -17,13 +19,15 @@ class App extends Component {
       <div className="App">
         <Header />
         <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/myCourse" exact component={MyCourse} />
-          <Route path="/addCourse/:courseId?" exact component={AddCourse} />
-          <Route path="/addChapter/:courseId" exact component={AddChapter} />
-          <Route path="/courseList" exact component={CourseList} />
-          <Route path="/courseCID" exact component={CourseByCID} />
-          <Route path="/exploreCourse/:courseId" exact component={ExploreCourse} />
+          <CRoute path="/" exact component={HomePage} />
+          <CRoute path="/myCourse" exact component={MyCourse} />
+          <CRoute path="/addCourse/:courseId?" exact component={AddCourse} />
+          <CRoute path="/addChapter/:courseId" exact component={AddChapter} />
+          <CRoute path="/courseList" exact component={CourseList} />
+          <CRoute path="/courseCID" exact component={CourseByCID} />
+          <CRoute path="/exploreCourse/:courseId" exact component={ExploreCourse} />
+          <CRoute path="/cart" exact component={Cart} />
+          <CRoute path="/boughtCourse" exact component={BoughtCourse} />
         </Switch>
       </div>
     );

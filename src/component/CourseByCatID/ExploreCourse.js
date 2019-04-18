@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { Button, Container } from 'reactstrap';
-import { Icon, Collapse } from 'antd'
+import { Icon, Collapse,notification } from 'antd'
 
 import * as courseAction from '../../action/CourseAction'
 import * as chapterAction from '../../action/chapterAction'
+import * as cartAction from '../../action/cartAction'
 
 import ModalDocument from './ModalDocument'
 
@@ -31,7 +32,7 @@ class ExploreCourse extends Component {
             courseName: "",
             chapterName: ""
         };
-        //this.toggleModal = this.toggleModal.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
 
     toggleModal(e) {
@@ -39,17 +40,22 @@ class ExploreCourse extends Component {
             docModal: !prevState.docModal
         }));
     }
+    openNotificationWithIcon = (type, msg) => {
+        notification[type]({
+            message: msg
+        });
+    };
 
     documentClick(filepath, courseName, chapterName, courseUser, e) {
         const { match: { params } } = this.props;
         let courseId = parseInt(params.courseId);
         let boughtCourseId = [];
 
-        // if (this.props.boughtCourse) {
-        //     this.props.boughtCourse.map(boughtcourse => {
-        //         return boughtCourseId.push(boughtcourse.courseId);
-        //     })
-        // }
+        if (this.props.boughtCourse) {
+            this.props.boughtCourse.map(boughtcourse => {
+                return boughtCourseId.push(boughtcourse.courseId);
+            })
+        }
         if (parseInt(this.props.userId) === courseUser) {
             this.setState({
                 file: filepath,
@@ -58,28 +64,32 @@ class ExploreCourse extends Component {
             });
             this.toggleModal();
         }
-        // else if (boughtCourseId.includes(courseId)) {
-        //     this.setState({
-        //         file: filepath,
-        //         courseName: courseName,
-        //         chapterName: chapterName
-        //     });
-        //     this.toggleModal()
-        // }
-        // else {
-        //     if (!this.props.token) {
-        //         this.openNotificationWithIcon('info', "Please Login First");
-        //     }
-        //     else {
-        //         this.openNotificationWithIcon('warning', "You haven't bought this course");
-        //     }
-        // }
+        else if (boughtCourseId.includes(courseId)) {
+            this.setState({
+                file: filepath,
+                courseName: courseName,
+                chapterName: chapterName
+            });
+            this.toggleModal()
+        }
+        else {
+            if (!this.props.token) {
+                this.openNotificationWithIcon('info', "Please Login First");
+            }
+            else {
+                this.openNotificationWithIcon('warning', "You haven't bought this course");
+            }
+        }
     }
 
     componentDidMount() {
         const { match: { params } } = this.props;
         this.props.action.course.getCourseByCourseID(params.courseId);
         this.props.action.chapter.getChapterByCourseId(params.courseId);
+        if (this.props.token && this.props.userId) {
+            this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
+            this.props.action.cart.getCartByUser(parseInt(this.props.userId));
+        }
     }
 
 
@@ -162,12 +172,15 @@ const mapStateToProps = state => {
         chapter: state.chapter.chapter,
         userId: state.auth.userId,
         token: state.auth.token,
+        boughtCourse: state.cart.boughtCourse,
+        getCart: state.cart.getCart
     }
 }
 const mapDispatchToProps = dispatch => ({
     action: {
         course: bindActionCreators(courseAction, dispatch),
-        chapter: bindActionCreators(chapterAction, dispatch)
+        chapter: bindActionCreators(chapterAction, dispatch),
+        cart: bindActionCreators(cartAction, dispatch)
     }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ExploreCourse);

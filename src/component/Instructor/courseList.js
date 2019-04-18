@@ -55,11 +55,6 @@ class CourseList extends Component {
                                 <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
                                 <CardText>{course.description}</CardText>
                                 <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} >Learn More</Button>
-                                {bought ? "" :
-                                    ((addedToCart && loginCart) ?
-                                        <Button outline  >Add To Cart</Button>
-                                        : <Button  outline onClick={this.btnGoCart.bind(this)}>Go to Cart</Button>)
-                                }
                             </CardBody>
                         </Card>
                     </div>

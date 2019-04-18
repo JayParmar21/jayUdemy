@@ -16,6 +16,7 @@ import search from '../../Logo/search.png'
 import * as authAction from "../../action/authAction";
 import * as catAction from "../../action/categoryAction"
 import * as courseAction from "../../action/CourseAction"
+import * as cartAction from '../../action/cartAction'
 
 import '../../styling.css'
 class Header extends Component {
@@ -88,6 +89,10 @@ class Header extends Component {
         e.preventDefault();
         this.props.history.push('/courseList')
     }
+    btnCart(e) {
+        e.preventDefault();
+        this.props.history.push('/cart');
+    }
     DropDownToggle() {
         this.setState(prevState => ({
             dropdownOpen: !prevState.dropdownOpen
@@ -144,7 +149,9 @@ class Header extends Component {
                         </Nav>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavbarBrand href="/"><img src={tlogo} alt="tlogo" style={{ height: '42px', width: '50px' }}></img></NavbarBrand>
+                                <NavbarBrand href="/">
+                                    {(token && role === 1) ? " " : <img src={tlogo} alt="tlogo" style={{ height: '42px', width: '50px' }} onClick={this.btnCart.bind(this)}></img>}
+                                </NavbarBrand>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/">
@@ -158,7 +165,7 @@ class Header extends Component {
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/">
-                                    {token ? <Button color="danger" outline onClick={this.btnBoughtCourse.bind(this)}>Bought Course</Button> : ""}
+                                    {(token && role === 2) ? <Button color="danger" outline onClick={this.btnBoughtCourse.bind(this)}>Bought Course</Button> : ""}
                                 </NavLink>
                             </NavItem>
                             <NavItem>
@@ -190,9 +197,9 @@ const mapStateToProps = state => {
         Name: state.auth.Name,
         token: state.auth.token,
         Role: state.auth.Role,
-        //getCart: state.cart.getCart,
+        getCart: state.cart.getCart,
         userId: state.auth.userId,
-        //totalCart: state.cart.totalCart,
+        totalCart: state.cart.totalCart,
         course: state.course.course,
         getCourse: state.course.getCourseByCid
     }
@@ -202,7 +209,7 @@ const mapDispatchToProps = (dispatch) => ({
     action: {
         category: bindActionCreators(catAction, dispatch),
         auth: bindActionCreators(authAction, dispatch),
-        //cart: bindActionCreators(cartAction, dispatch),
+        cart: bindActionCreators(cartAction, dispatch),
         course: bindActionCreators(courseAction, dispatch)
     }
 })

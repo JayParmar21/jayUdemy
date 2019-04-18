@@ -39,7 +39,7 @@ export const getCourseByCID = (cid) => {
                 if (error) {
                     dispatch({
                         type: FAILED,
-                        data: { error_msg: error.response.data.message }
+                        data: { error_msg: "" }
                     });
                 }
             });

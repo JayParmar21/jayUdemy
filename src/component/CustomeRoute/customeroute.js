@@ -50,4 +50,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps)(CRoute)
+export default connect(mapStateToProps, null)(CRoute)

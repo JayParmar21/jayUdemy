@@ -325,3 +325,10 @@
   -webkit-filter: blur(2px);
   background-size: cover;
 }
+.learn{
+    margin-left:-10px;
+}
+.addto{
+    margin-right: -10px;
+    margin-left: 3px;
+}

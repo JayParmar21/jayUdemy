@@ -38,7 +38,7 @@ export const getCartByUser = (userId) => {
                 if (error) {
                     dispatch({
                         type: FAILED,
-                        data: { error_msg: error.response.data.message }
+                        data: { error_msg: "" }
                     });
                 }
             });
@@ -104,7 +104,7 @@ export const getBoughtCourseByUser = (userId) => {
                 if (error) {
                     dispatch({
                         type: FAILED,
-                        data: { error_msg: error.response.data.message }
+                        data: { error_msg: "" }
                     });
                 }
             });
