@@ -93,6 +93,33 @@ class Header extends Component {
         e.preventDefault();
         this.props.history.push('/cart');
     }
+
+    handleInputChange = (e) => {
+        this.setState({
+            query: e.target.value
+        });
+        if (e.target.value.length > 1)
+            this.getSearchData();
+        else {
+            if (e.target.value.length === 0) {
+                this.setState({ result: null })
+            }
+        }
+    }
+
+    getSearchData() {
+        let a = [];
+        let FilteredCourse = this.props.course.filter(course => {
+            return course.coursename.toLowerCase().indexOf(this.state.query.toLowerCase()) !== -1;
+        });
+        if (FilteredCourse) {
+            FilteredCourse.map(course => {
+                return a.push({ "courseId": course.id, "coursename": course.coursename })
+            })
+        }
+        this.setState({ result: a });
+    }
+
     DropDownToggle() {
         this.setState(prevState => ({
             dropdownOpen: !prevState.dropdownOpen
@@ -105,7 +132,27 @@ class Header extends Component {
         }));
     }
 
+    btnSearchResult(courseId, e) {
+        e.preventDefault();
+        this.props.action.course.getCourseByCourseID(courseId);
+        this.setState({ result: [], query: "" });
+        this.props.history.push({
+            pathname: '/searchData/' + courseId
+        })
+    }
+
     render() {
+        const { result } = this.state;
+        let searchResult = [];
+        if (result && result.length > 0) {
+            result.map((res, i) => {
+                return searchResult.push(
+                    <p key={i} style={{ cursor: "pointer" }} onClick={this.btnSearchResult.bind(this, res.courseId)}>{res.coursename}</p>
+                );
+            })
+        }
+
+
         let token = this.props.token;
         let role = parseInt(this.props.Role);
 
@@ -117,7 +164,7 @@ class Header extends Component {
         }
 
         return (
-            <div>
+            <div className="header" style={{marginTop:'-75px'}}>
                 <Login isOpen={this.state.LoginModal} toggle={this.toggleLogin.bind(this)} toggleModals={this.toggleLinks.bind(this)}></Login>{' '}
                 <Register isOpen={this.state.RegisterModal} toggle={this.toggleRegister.bind(this)} toggleModals={this.toggleLinks.bind(this)}></Register>
                 <Navbar className="navbar" light expand="md" style={{ height: '65px' }}>
@@ -139,11 +186,11 @@ class Header extends Component {
                             </NavItem>
                             <NavItem className="searchNav">
                                 <InputGroup style={{ width: "450px", marginLeft: "10px", marginTop: "10px" }}>
-                                    <Input placeholder="Search For Course" />
+                                    <Input placeholder="Search For Course" onChange={this.handleInputChange.bind(this)} value={this.state.query} />
                                     <InputGroupAddon addonType="append"> <img src={search} alt="category" className="searchIcon" /></InputGroupAddon>
                                 </InputGroup>
                                 <div className="searchResult">
-
+                                    {searchResult}
                                 </div>
                             </NavItem>
                         </Nav>
@@ -171,7 +218,7 @@ class Header extends Component {
                             <NavItem>
                                 {!token ?
                                     (<div className="marginLogin" >
-                                        <Button outline onClick={this.toggleLogin}> Log In</Button>{' '}
+                                        <Button outline color="primary" onClick={this.toggleLogin}> Log In</Button>{' '}
                                         <Button color="danger" onClick={this.toggleRegister}>Sign Up</Button></div>) :
                                     (<div>
                                         <Dropdown isOpen={this.state.ddlogoutopen} toggle={this.DropDownLogoutToggle} className="ddlogout">

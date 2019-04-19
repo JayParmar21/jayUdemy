@@ -332,3 +332,35 @@
     margin-right: -10px;
     margin-left: 3px;
 }
+.header{
+    background-color: rgba(231, 221, 207, 0.404)
+}
+.addcourse{
+    background-color: cornsilk
+}
+/* .dropdown{
+    background-color: cadetblue;
+} */
+figure {
+	width: 100%;
+	height: 200px;
+	margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+    
+	overflow: hidden;
+}
+figure:hover+span {
+	bottom: -36px;
+	opacity: 1;
+}
+.hover07 figure img {
+	-webkit-filter: blur(3px);
+	filter: blur(3px);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.hover07 figure:hover img {
+	-webkit-filter: blur(0);
+	filter: blur(0);
+}

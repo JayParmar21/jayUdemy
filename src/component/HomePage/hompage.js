@@ -7,11 +7,26 @@ import { withRouter } from "react-router-dom";
 
 import { Rate, notification } from 'antd';
 
+import Slider from 'react-animated-slider';
+import 'react-animated-slider/build/horizontal.css';
+
 import * as courseAction from "../../action/CourseAction"
 import * as cartAction from '../../action/cartAction'
 import HomeLogo from '../../Logo/hom.jpg';
+import HomeLogo2 from '../../Logo/hom2.jpg';
+import HomeLogo3 from '../../Logo/hom3.jpg';
+import HomeLogo4 from '../../Logo/hom4.jpg';
 import path from '../../path'
 import "../../styling.css"
+import "../../stylesh.css"
+import '../../slider-animation.css'
+
+const content = [
+    { image: HomeLogo },
+    { image: HomeLogo2 },
+    { image: HomeLogo3 },
+    { image: HomeLogo4 }
+];
 class HomePage extends Component {
     state = {
         width: window.innerWidth,
@@ -45,23 +60,28 @@ class HomePage extends Component {
     }
 
     btnAddToCart(courseId, e) {
-        let cartData = [];
-        let data = {
-            userId: parseInt(this.props.userId),
-            courseId: courseId
-        }
-        if (this.props.token) {
-            this.props.action.cart.addToCart(data);
+        if (!this.props.token && this.props.Role == "") {
+            this.openNotificationWithIcon('info', "Please Login First");
         }
         else {
-            cartData = JSON.parse(localStorage.getItem("cart"));
-            if (cartData === null) {
-                cartData = [];
+            let cartData = [];
+            let data = {
+                userId: parseInt(this.props.userId),
+                courseId: courseId
             }
-            cartData.push({ courseId: courseId });
-            localStorage.setItem("cart", JSON.stringify(cartData));
+            if (this.props.token) {
+                this.props.action.cart.addToCart(data);
+            }
+            else {
+                cartData = JSON.parse(localStorage.getItem("cart"));
+                if (cartData === null) {
+                    cartData = [];
+                }
+                cartData.push({ courseId: courseId });
+                localStorage.setItem("cart", JSON.stringify(cartData));
+            }
+            this.openNotificationWithIcon('success', "Successfully added to cart");
         }
-        this.openNotificationWithIcon('success', "Successfully added to cart");
     }
 
     renderMedia(course) {
@@ -110,7 +130,7 @@ class HomePage extends Component {
                     <CardImg top width="10px" src={path + course.courseImage} alt="Card image cap" />
                     <CardBody>
                         <CardTitle style={{ marginTop: '-10px' }}><h2>{course.coursename}</h2></CardTitle>
-                        <CardText>{course.description}</CardText>
+                        <CardText style={{ marginBottom: '0.5rem' }}>{course.description}</CardText>
                         <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} style={{ marginLeft: '-10px' }} >Learn More</Button>
                         {bought ? "" :
                             ((addedToCart && loginCart) ?
@@ -129,8 +149,9 @@ class HomePage extends Component {
                     <CardImg top width="10px" src={path + course.courseImage} alt="Card image cap" />
                     <CardBody>
                         <CardTitle style={{ marginTop: '-10px' }}><h2>{course.coursename}</h2></CardTitle>
-                        <CardText>{course.description}</CardText>
+                        <CardText style={{ marginBottom: '0.5rem' }}>{course.description}</CardText>
                         <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} style={{ marginLeft: '-10px' }} >Learn More</Button>
+                        <Button outline color="danger" outline onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginRight: '-10px', marginLeft: '10px' }} >Add To Cart</Button>
                     </CardBody>
                 </Card>
             </div>
@@ -151,17 +172,21 @@ class HomePage extends Component {
             })
         }
 
-
+        let sliderimg = []
+        sliderimg = content.map((item, index) => {
+            return (
+                <div key={index} className="slider-content"
+                    style={{ background: `url('${item.image}') no-repeat center center`, height: '100%' }}>
+                </div>
+            )
+        })
 
         return (
             <div className="hrelative">
-                <img src={HomeLogo}
-                    style={{
-                        width: "100%", height: "100%",
-                        backgroundRepeat: "no-repeat", backgroundAttachment: "fixed"
-                    }}
-                    alt="Home"></img>
-                <div className="homediv" style={{ display: 'block', width: '100%', textAlign: 'left' }}>
+                <Slider className="slider-wrapper" >
+                    {sliderimg}
+                </Slider>
+                <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>
                     {this.props.token ? (this.props.Role == 2 ? courseList : "") : courseList1}
                 </div>
             </div>

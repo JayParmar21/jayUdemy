@@ -249,71 +249,72 @@ class AddCourse extends Component {
         }
         console.log(this.props.getcourse.getCourseByCid)
         return (
-            <Container style={{ marginTop: "30px", width: "40%", boxShadow: "4px 2px 4px 2px", color: "grey", marginBottom: "30px" }}>
-                {!this.state.edit ? <h1>Add Course</h1> : <h1>Edit Course</h1>}
-                <Form >
-                    <FormGroup>
-                        <Label className="chphead">Course Title</Label>
-                        <Input type="text" name="coursename" id="coursename" placeholder="Title" defaultValue={this.state.editData.coursename} onChange={this.inputHandler.bind(this)} />
-                        <span className="chperror">{this.state.fieldsErrors.coursename}</span>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label className="chphead">Course description</Label>
-                        <Input type="text" name="description" id="description" placeholder="Description" defaultValue={this.state.editData.description} onChange={this.inputHandler.bind(this)} />
-                        <span className="chperror">{this.state.fieldsErrors.description}</span>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="Category" className="chphead">Category</Label>
-                        <Input type="select" name="Category" id="Category" onChange={this.categoryHandler.bind(this)} value={this.state.editData.catId}>
-                            <option className="dddisplay">Select Category</option>
-                            {categories}
-                        </Input>
-                        {!this.state.catValid ? <span className="chperror">{this.state.fieldsErrors.catMsg}</span> : ""}
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="SubCategory" className="chphead">SubCategory</Label>
-                        <Input type="select" name="subcatId" id="SubCategory" onChange={this.subcategoryHandler.bind(this)} value={this.state.editData.subcatId}>
-                            <option className="dddisplay">Select SubCategory</option>
-                            {subcategories}
-                        </Input>
-                        {!this.state.subcatValid ? <span className="chperror">{this.state.fieldsErrors.subcatMsg}</span> : ""}
-                    </FormGroup>
-                    <FormGroup>
-                        <Label className="chphead">Upload Image</Label>
-                        {(this.state.showimage && this.state.courseImage !== "defaultimg.png") ?
-                            (this.state.editData.length > 0 || this.state.displayImage === "") ?
-                                (<div align="center">
-                                    <img src={path + "thumbnail/" + this.state.courseImage} alt="" className="courseimg" />
-                                    <img src={deleteIcon} onClick={this.cancelImageClick.bind(this)}
-                                        className="courseimgdelete"
-                                        alt="" />
-                                </div>) :
-                                (<div align="center">
-                                    <img src={this.state.displayImage} alt="" className="courseimg" />
-                                    <img src={deleteIcon} onClick={this.cancelImageClick.bind(this)}
-                                        className="courseimgdelete"
-                                        alt="" />
-                                </div>) : (<ImageUploader
-                                    withIcon={true}
-                                    ref="file"
-                                    buttonText="Select Course Images"
-                                    imgExtension={['.jpg', '.gif', '.png', '.jpeg']}
-                                    onChange={this.onImageUpload.bind(this)}
-                                    maxFileSize={5242880}
-                                    withLabel={false}
-                                    singleImage={true}
-                                    accept={"image/*"} />)}
-                    </FormGroup>
-                    {!this.state.edit ?
-                        <Button color="danger" onClick={this.btnAdd.bind(this)}>Create Course</Button>
-                        :
-                        <Button color="danger" onClick={this.btnEdit.bind(this)}>Edit Course</Button>
-                    }{' '}
-                    <Button color="secondary" outline onClick={this.btnCancel.bind(this)}>Cancel</Button>
-                </Form>
-                <br />
-            </Container>
-
+            <div>
+                <Container style={{ marginTop: "30px", width: "40%", boxShadow: "4px 2px 4px 2px", color: "grey", marginBottom: "30px", boxShadow: "0 0 5px 5px" }}>
+                    {!this.state.edit ? <h1>Add Course</h1> : <h1>Edit Course</h1>}
+                    <Form >
+                        <FormGroup>
+                            <Label className="chphead">Course Title</Label>
+                            <Input type="text" name="coursename" id="coursename" placeholder="Title" defaultValue={this.state.editData.coursename} onChange={this.inputHandler.bind(this)} />
+                            <span className="chperror">{this.state.fieldsErrors.coursename}</span>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label className="chphead">Course description</Label>
+                            <Input type="text" name="description" id="description" placeholder="Description" defaultValue={this.state.editData.description} onChange={this.inputHandler.bind(this)} />
+                            <span className="chperror">{this.state.fieldsErrors.description}</span>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="Category" className="chphead">Category</Label>
+                            <Input type="select" name="Category" id="Category" onChange={this.categoryHandler.bind(this)} value={this.state.editData.catId}>
+                                <option className="dddisplay">Select Category</option>
+                                {categories}
+                            </Input>
+                            {!this.state.catValid ? <span className="chperror">{this.state.fieldsErrors.catMsg}</span> : ""}
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="SubCategory" className="chphead">SubCategory</Label>
+                            <Input type="select" name="subcatId" id="SubCategory" onChange={this.subcategoryHandler.bind(this)} value={this.state.editData.subcatId}>
+                                <option className="dddisplay">Select SubCategory</option>
+                                {subcategories}
+                            </Input>
+                            {!this.state.subcatValid ? <span className="chperror">{this.state.fieldsErrors.subcatMsg}</span> : ""}
+                        </FormGroup>
+                        <FormGroup>
+                            <Label className="chphead">Upload Image</Label>
+                            {(this.state.showimage && this.state.courseImage !== "defaultimg.png") ?
+                                (this.state.editData.length > 0 || this.state.displayImage === "") ?
+                                    (<div align="center">
+                                        <img src={path + "thumbnail/" + this.state.courseImage} alt="" className="courseimg" />
+                                        <img src={deleteIcon} onClick={this.cancelImageClick.bind(this)}
+                                            className="courseimgdelete"
+                                            alt="" />
+                                    </div>) :
+                                    (<div align="center">
+                                        <img src={this.state.displayImage} alt="" className="courseimg" />
+                                        <img src={deleteIcon} onClick={this.cancelImageClick.bind(this)}
+                                            className="courseimgdelete"
+                                            alt="" />
+                                    </div>) : (<ImageUploader
+                                        withIcon={true}
+                                        ref="file"
+                                        buttonText="Select Course Images"
+                                        imgExtension={['.jpg', '.gif', '.png', '.jpeg']}
+                                        onChange={this.onImageUpload.bind(this)}
+                                        maxFileSize={5242880}
+                                        withLabel={false}
+                                        singleImage={true}
+                                        accept={"image/*"} />)}
+                        </FormGroup>
+                        {!this.state.edit ?
+                            <Button color="danger" onClick={this.btnAdd.bind(this)}>Create Course</Button>
+                            :
+                            <Button color="danger" onClick={this.btnEdit.bind(this)}>Edit Course</Button>
+                        }{' '}
+                        <Button color="secondary" outline onClick={this.btnCancel.bind(this)}>Cancel</Button>
+                    </Form>
+                    <br />
+                </Container>
+            </div>
         )
     }
 
