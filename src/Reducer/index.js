@@ -6,6 +6,8 @@ import subcategory from './subcategoryReducer'
 import course from './CourseReducer';
 import chapter from './chapterReducer'
 import cart from './cartReducer';
+import ratings from './ratingReducer';
 
 
-export default combineReducers({ auth, category, subcategory, course, chapter, cart });
+
+export default combineReducers({ auth, category, subcategory, course, chapter, cart,ratings });

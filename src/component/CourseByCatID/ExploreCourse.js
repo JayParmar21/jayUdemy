@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
-import { Button, Container } from 'reactstrap';
+import { Container } from 'reactstrap';
 import { Icon, Collapse, notification } from 'antd'
 
 import * as courseAction from '../../action/CourseAction'
@@ -133,9 +133,9 @@ class ExploreCourse extends Component {
             <div>
                 <ModalDocument isOpen={this.state.docModal} toggle={this.toggleModal.bind(this)} chapterName={this.state.chapterName} courseName={this.state.courseName} file={this.state.file} />
                 <div key={course.id} className="hrelative">
-                    <div class="hover07 column" style={{ width: '100%', marginLeft: '0px', height: '520px'}}>
+                    <div class="hover07 column" style={{ width: '100%', marginLeft: '0px', height: '520px' }}>
                         <div>
-                            <figure style={{height:'50%'}}><img src={path + course.courseImage}
+                            <figure style={{ height: '50%' }}><img src={path + course.courseImage}
                                 style={{
                                     display: 'block',
                                     width: '100%', height: '520px',

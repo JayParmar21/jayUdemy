@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Container, Media, Card, CardBody, CardImg, CardTitle, CardText } from 'reactstrap';
+import { Button, Container,  Card, CardBody, CardImg, CardTitle, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
-import { Rate, notification } from 'antd';
 import 'antd/dist/antd.css';
 
 import * as courseAction from '../../action/CourseAction';
@@ -39,20 +38,15 @@ class CourseList extends Component {
 
     }
     render() {
-        let addedToCart = true;
-        let loginCart = true;
-        let bought = false;
-        let boughtCourseId = [];
-
         let courseList;
         if (this.props.course) {
             courseList = this.props.course.map(course => {
                 return (
-                    <div key={course.id} className="abc1">
+                    <div key={course.id} className="abc1" style={{ height: '330px' }}>
                         <Card>
-                            <CardImg top width="10px" src={path + course.courseImage} alt="Card image cap" />
-                            <CardBody>
-                                <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
+                            <CardImg top style={{ height: "50%" }} src={path + course.courseImage} alt="Card image cap" />
+                            <CardBody style={{ height: "50%" }}>
+                                <CardTitle ><h2>{course.coursename}</h2></CardTitle>
                                 <CardText>{course.description}</CardText>
                                 <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} >Learn More</Button>
                             </CardBody>

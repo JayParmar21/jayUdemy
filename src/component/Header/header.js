@@ -19,6 +19,7 @@ import * as courseAction from "../../action/CourseAction"
 import * as cartAction from '../../action/cartAction'
 
 import '../../styling.css'
+let cartTotal = 0
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -164,7 +165,7 @@ class Header extends Component {
         }
 
         return (
-            <div className="header" style={{marginTop:'-75px'}}>
+            <div className="header" style={{ marginTop: '-75px' }}>
                 <Login isOpen={this.state.LoginModal} toggle={this.toggleLogin.bind(this)} toggleModals={this.toggleLinks.bind(this)}></Login>{' '}
                 <Register isOpen={this.state.RegisterModal} toggle={this.toggleRegister.bind(this)} toggleModals={this.toggleLinks.bind(this)}></Register>
                 <Navbar className="navbar" light expand="md" style={{ height: '65px' }}>
@@ -196,8 +197,17 @@ class Header extends Component {
                         </Nav>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavbarBrand href="/">
+                                <NavbarBrand href="/" style={{ marginRight: '-40px' }}>
                                     {(token && role === 1) ? " " : <img src={tlogo} alt="tlogo" style={{ height: '42px', width: '50px' }} onClick={this.btnCart.bind(this)}></img>}
+                                    {this.props.token ?
+                                        this.props.Role == 2 ?
+                                            <span className="totalcart">
+                                                <b>{this.props.getCart.length}</b>
+                                            </span> : "" :
+                                        <span className="totalcart">
+                                            <b>{cartTotal}</b>
+                                        </span>
+                                    }
                                 </NavbarBrand>
                             </NavItem>
                             <NavItem>

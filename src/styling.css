@@ -112,7 +112,7 @@
 
 .card {
     width: 250px;
-    height: 330px;
+    height: 100%;
 }
 
 .carddetail {
@@ -195,8 +195,11 @@
     position: absolute;
     left: 5%;
     top: 20%;
-    width: 100%;
+    width: 95%;
     text-align: center;
+    display: flex !important;
+    text-align: left !important;
+    flex-wrap: wrap !important;
 }
 
 .chphead {
@@ -313,6 +316,9 @@
     width: 25%;
     margin-bottom:1%;
 }
+.imgCard{
+ height:55%;
+}
 .courb{
     display:block;
     width: 100% ;
@@ -363,4 +369,7 @@ figure:hover+span {
 .hover07 figure:hover img {
 	-webkit-filter: blur(0);
 	filter: blur(0);
+}
+.cartbody{
+    background-color: burlywood;
 }

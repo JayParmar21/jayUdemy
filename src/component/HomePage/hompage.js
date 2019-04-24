@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Button, CardBody, ButtonGroup, CardDeck, CardText, CardTitle, Card, CardImg } from 'reactstrap'
+import { Button, CardBody, CardText, CardTitle, Card, CardImg } from 'reactstrap'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
-import { withRouter } from "react-router-dom";
 
-import { Rate, notification } from 'antd';
+
+import { notification } from 'antd';
 
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
@@ -32,9 +32,6 @@ class HomePage extends Component {
         width: window.innerWidth,
         height: window.innerHeight - 60
     }
-    // handleLetsStartButton() {
-    //     this.props.history.push('/courseList');
-    // }
     componentDidMount() {
         this.props.action.course.getCourse();
         if (this.props.token && this.props.userId) {
@@ -125,16 +122,16 @@ class HomePage extends Component {
             }
         }
         return (
-            <div key={course.id} className="abc1">
-                <Card>
-                    <CardImg top width="10px" src={path + course.courseImage} alt="Card image cap" />
-                    <CardBody>
-                        <CardTitle style={{ marginTop: '-10px' }}><h2>{course.coursename}</h2></CardTitle>
-                        <CardText style={{ marginBottom: '0.5rem' }}>{course.description}</CardText>
+            <div key={course.id} className="abc1" style={{ height: '330px' }}>
+                <Card >
+                    <CardImg style={{ height: "50%" }} src={path + course.courseImage} alt="Card image cap" />
+                    <CardBody style={{ height: "50%" }}>
+                        <CardTitle ><h2>{course.coursename}</h2></CardTitle>
+                        <CardText >{course.description}</CardText>
                         <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} style={{ marginLeft: '-10px' }} >Learn More</Button>
                         {bought ? "" :
                             ((addedToCart && loginCart) ?
-                                <Button outline onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginRight: '-10px', marginLeft: '10px' }}>Add To Cart</Button>
+                                <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginRight: '-10px', marginLeft: '10px' }}>Add To Cart</Button>
                                 : <Button outline onClick={this.btnGoCart.bind(this)} style={{ marginRight: '-10px', marginLeft: '10px' }}>Go to Cart</Button>)
                         }
                     </CardBody>
@@ -144,12 +141,12 @@ class HomePage extends Component {
     }
     renderMedia1(course) {
         return (
-            <div key={course.id} className="abc1">
+            <div key={course.id} className="abc1" style={{ height: '330px' }}>
                 <Card>
-                    <CardImg top width="10px" src={path + course.courseImage} alt="Card image cap" />
-                    <CardBody>
-                        <CardTitle style={{ marginTop: '-10px' }}><h2>{course.coursename}</h2></CardTitle>
-                        <CardText style={{ marginBottom: '0.5rem' }}>{course.description}</CardText>
+                    <CardImg style={{ height: "50%" }} top src={path + course.courseImage} alt="Card image cap" />
+                    <CardBody style={{ height: "50%" }}>
+                        <CardTitle ><h2>{course.coursename}</h2></CardTitle>
+                        <CardText >{course.description}</CardText>
                         <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} style={{ marginLeft: '-10px' }} >Learn More</Button>
                         <Button outline color="danger" outline onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginRight: '-10px', marginLeft: '10px' }} >Add To Cart</Button>
                     </CardBody>

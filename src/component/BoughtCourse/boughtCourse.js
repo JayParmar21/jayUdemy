@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Container, Media, Button, CardTitle, CardImg, CardBody, CardText, Card } from 'reactstrap';
+import { Container,  Button, CardTitle, CardImg, CardBody, CardText, Card } from 'reactstrap';
 
 import 'antd/dist/antd.css';
 

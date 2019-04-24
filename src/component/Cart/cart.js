@@ -9,7 +9,6 @@ import * as courseAction from '../../action/CourseAction';
 import path from '../../path';
 import 'antd/dist/antd.css';
 import '../../styling.css';
-import { stat } from 'fs';
 
 class Cart extends Component {
     state = {

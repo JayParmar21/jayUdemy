@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Card, Row, Col, CardBody, CardTitle, Button, CardImg, CardText } from 'reactstrap';
+import { Card,  CardBody, CardTitle, Button, CardImg, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import { Rate, notification } from 'antd';
+import {  notification } from 'antd';
 import 'antd/dist/antd.css';
 
 import * as cartAction from '../../action/cartAction'
@@ -12,7 +12,19 @@ import * as courseAction from '../../action/CourseAction'
 import path from '../../path';
 import '../../styling.css'
 import HomeLogo from '../../Logo/hom.jpg'
+import HomeLogo2 from '../../Logo/hom2.jpg';
+import HomeLogo3 from '../../Logo/hom3.jpg';
+import HomeLogo4 from '../../Logo/hom4.jpg';
 
+import Slider from 'react-animated-slider';
+import 'react-animated-slider/build/horizontal.css';
+
+const content = [
+    { image: HomeLogo },
+    { image: HomeLogo2 },
+    { image: HomeLogo3 },
+    { image: HomeLogo4 }
+];
 class SearchDisplay extends Component {
 
     btnExplore(courseId, e) {
@@ -204,14 +216,19 @@ class SearchDisplay extends Component {
                 return courseList2.push(this.renderCard(courses))
             })
         }
+        let sliderimg = []
+        sliderimg = content.map((item, index) => {
+            return (
+                <div key={index} className="slider-content"
+                    style={{ background: `url('${item.image}') no-repeat center center`, height: '100%' }}>
+                </div>
+            )
+        })
         return (
             <div className="hrelative">
-                <img src={HomeLogo}
-                    style={{
-                        width: "100%", height: "100%",
-                        backgroundRepeat: "no-repeat", backgroundAttachment: "fixed"
-                    }}
-                    alt="Home"></img>
+                <Slider className="slider-wrapper" >
+                    {sliderimg}
+                </Slider>
                 <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>
                     {this.props.token ? (this.props.Role == 1 ? courseList : courseList1) : courseList2}
                 </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Card, Button, CardImg, CardTitle, CardText, CardDeck, CardBody } from 'reactstrap';
+import { Container, Card, Button, CardImg, CardTitle, CardText,CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 
@@ -42,11 +42,11 @@ class MyCourse extends Component {
         if (this.props.coursebyuser) {
             courseList = this.props.coursebyuser.map(course => {
                 return (
-                    <div key={course.id} className="abc1">
+                    <div key={course.id} className="abc1" style={{ height: '330px' }}>
                         <Card>
-                            <CardImg top width="10px" src={path + course.courseImage} alt="Card image cap" />
-                            <CardBody>
-                                <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
+                            <CardImg top style={{ height: "50%" }}  src={path + course.courseImage} alt="Card image cap" />
+                            <CardBody style={{ height: "50%" }}>
+                                <CardTitle ><h2>{course.coursename}</h2></CardTitle>
                                 <CardText>{course.description}</CardText>
                                 <Button outline color="info" onClick={this.btnAddChapter.bind(this, course.id)}>Add Chapter</Button>
                                 <Button outline color="danger" outline style={{ marginLeft: '35px' }} onClick={this.btnEdit.bind(this, course.id)}>Edit</Button>

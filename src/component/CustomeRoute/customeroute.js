@@ -14,16 +14,18 @@ class CRoute extends Component {
         const Component = component;
         let redirectTo = undefined;
 
-        if (!isUserLoggedIn && rest.path === "/addCourse") {
+        if (!isUserLoggedIn && rest.path === "/myCourse") {
             redirectTo = "/"
         }
-        else if (!isUserLoggedIn && rest.path === "/myCourse") {
+        else if (!isUserLoggedIn && rest.path === "/courseList") {
+            redirectTo = "/"
+        }
+        else if (!isUserLoggedIn && rest.path === "/addCourse") {
             redirectTo = "/"
         }
         else if (!isUserLoggedIn && rest.path === "/boughtCourse") {
             redirectTo = "/"
         }
-
         else if (isUserLoggedIn && rest.path === "/addCourse" && userCurrentRole !== 1) {
             redirectTo = "/"
         }
