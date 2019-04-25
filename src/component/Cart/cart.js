@@ -6,9 +6,13 @@ import { notification } from 'antd';
 
 import * as cartAction from '../../action/cartAction';
 import * as courseAction from '../../action/CourseAction';
+
+import rupe from '../../Logo/rupee.png'
+
 import path from '../../path';
 import 'antd/dist/antd.css';
 import '../../styling.css';
+
 
 class Cart extends Component {
     state = {
@@ -80,16 +84,18 @@ class Cart extends Component {
     }
 
     render() {
-
+        let total=0;
         let carts = [];
         if (this.props.token) {
             if (this.props.getCart && this.props.getCart.length !== 0) {
                 this.props.getCart.map((cart, i) => {
+                    total=total+cart.rupee
                     return carts.push(<tr key={cart.id}>
                         <td><img src={path + 'thumbnail/' + cart.courseImage} alt="" /></td>
                         <td>{cart.coursename}</td>
                         <td>{cart.categoryname}</td>
                         <td>{cart.subcategoryname}</td>
+                        <td>{cart.rupee}</td>
                         <td>
                             <Button outline color="danger" onClick={this.btnRemove.bind(this, cart.id)}>Remove</Button>{' '}
                             <Button outline onClick={this.btnExplore.bind(this, cart.courseId)}>Explore</Button>{' '}
@@ -100,7 +106,7 @@ class Cart extends Component {
             }
             else {
                 carts.push(<tr key="1">
-                    <td colSpan="5">Your Cart is Empty!!! <br /><br /><Button color="danger" onClick={this.btnKeepShopping.bind(this)}>Keep Shopping</Button></td>
+                    <td colSpan="7">Your Cart is Empty!!! <br /><br /><Button color="danger" onClick={this.btnKeepShopping.bind(this)}>Keep Shopping</Button></td>
                 </tr>)
             }
         }
@@ -119,6 +125,7 @@ class Cart extends Component {
                                 <td>{course.coursename}</td>
                                 <td>{course.categoryname}</td>
                                 <td>{course.subcategoryname}</td>
+                                <td>{course.rupee}</td>
                                 <td>
                                     <Button outline color="danger" onClick={this.btnRemoveCourse.bind(this, course.id)}>Remove</Button>{' '}
                                     <Button outline onClick={this.btnExplore.bind(this, course.id)}>Explore</Button>
@@ -131,7 +138,7 @@ class Cart extends Component {
             }
             else {
                 carts.push(<tr key="1">
-                    <td colSpan="5">Your Cart is Empty!!! <br /><br /><Button color="danger" onClick={this.btnKeepShopping.bind(this)}>Keep Shopping</Button></td>
+                    <td colSpan="6">Your Cart is Empty!!! <br /><br /><Button color="danger" onClick={this.btnKeepShopping.bind(this)}>Keep Shopping</Button></td>
                 </tr>)
             }
         }
@@ -145,6 +152,7 @@ class Cart extends Component {
                             <th>Course</th>
                             <th>Category</th>
                             <th>SubCategory</th>
+                            <th><img src={rupe} alt="category" className="rupesIcon" /></th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -152,12 +160,14 @@ class Cart extends Component {
                         {carts}
                     </tbody>
                 </Table>
+                <div><h3>Total Rs.</h3><h4>{total}</h4>
                 {(this.props.getCart.length !== 0) ?
                     <div>
                         <Button color="primary" className="buttons" outline onClick={this.btnCheckOut.bind(this, carts)}>Proceed To CheckOut</Button>
                         <Button color="primary" className="buttons" onClick={this.btnKeepShopping.bind(this)} outline>Keep Shopping</Button>
                     </div>
                     : null}
+                </div>
             </Container>
         )
     }

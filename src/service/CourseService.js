@@ -1,6 +1,7 @@
 import BaseService from './baseService'
 
 export function addCourse(data) {
+    debugger
     return BaseService.post('/course/add/course', data);
 }
 

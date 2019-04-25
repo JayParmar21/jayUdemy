@@ -2,6 +2,7 @@ import * as courseService from '../service/CourseService';
 import { FAILED, ADD_COURSE, GET_COURSE, GET_COURSE_BY_USER, DELETE_COURSE, UPDATE_COURSE, GET_COURSE_BY_COURSE_ID } from '../Reducer/CourseReducer';
 
 export const addCourse = (data) => {
+    debugger
     return (dispatch) => {
         courseService.addCourse(data)
             .then((response) => {

@@ -145,9 +145,9 @@ class ExploreCourse extends Component {
                             </figure>
                         </div>
                     </div>
-                    <div className="homediv" style={{ display: 'block', width: '100%', textAlign: 'left' }}>
+                    <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>
                         <h1 className="col">{course.coursename}</h1>
-                        <h3 className="col">{course.description}</h3>
+                        <h3 className="col" style={{marginRight:'100px'}}>{course.description}</h3>
                     </div>
                     <div className="courseContent">
                         <h4><b>Course Content</b></h4>

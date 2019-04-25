@@ -39,6 +39,8 @@ class Header extends Component {
         this.toggleRegister = this.toggleRegister.bind(this);
         this.DropDownToggle = this.DropDownToggle.bind(this);
         this.DropDownLogoutToggle = this.DropDownLogoutToggle.bind(this);
+        this.onMouseEnter = this.onMouseEnter.bind(this);
+        this.onMouseLeave = this.onMouseLeave.bind(this);
     }
 
     componentDidMount() {
@@ -141,7 +143,13 @@ class Header extends Component {
             pathname: '/searchData/' + courseId
         })
     }
+    onMouseEnter() {
+        this.setState({ dropdownOpen: true });
+    }
 
+    onMouseLeave() {
+        this.setState({ dropdownOpen: false });
+    }
     render() {
         const { result } = this.state;
         let searchResult = [];
@@ -177,10 +185,12 @@ class Header extends Component {
                                 <NavLink>
                                     <img src={category} alt="category" className="cat" height="35px" width="35px" />
                                     {' '}
-                                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.DropDownToggle} className="display" >
+                                    <Dropdown className="d-inline-block" onMouseOver={this.onMouseEnter} onMouseLeave={this.onMouseLeave} isOpen={this.state.dropdownOpen} toggle={this.toggle} >
                                         <DropdownToggle style={{ background: "white", color: " black" }} caret>Categories </DropdownToggle>
                                         <DropdownMenu>
+                                            <DropdownItem>
                                             {categories}
+                                            </DropdownItem>
                                         </DropdownMenu>
                                     </Dropdown>
                                 </NavLink>

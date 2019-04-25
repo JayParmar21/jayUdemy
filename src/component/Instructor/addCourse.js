@@ -19,15 +19,16 @@ class AddCourse extends Component {
             coursename: "",
             description: "",
             catId: 0,
+            rupee:"",
             subcatId: 0,
-            fieldsErrors: { coursename: '', description: '', catMsg: "", subcatMsg: "" },
-            fieldsValid: { coursename: false, description: false },
+            fieldsErrors: { coursename: '', description: '', catMsg: "", subcatMsg: "",rupee:"" },
+            fieldsValid: { coursename: false, description: false,rupee:false },
             formValid: false,
             catValid: false,
             subcatValid: false,
             edit: false,
             courseId: 0,
-            editData: { coursename: "", description: "", catId: 0, subcatId: 0, courseImage: "" },
+            editData: { coursename: "", description: "", catId: 0, subcatId: 0, courseImage: "",rupee:"" },
             courseImage: [],
             showimage: false,
             displayImage: ""
@@ -39,7 +40,6 @@ class AddCourse extends Component {
     validateField(fieldName, value) {
         let fieldValidationErrors = this.state.fieldsErrors;
         let fieldValidation = this.state.fieldsValid;
-
         switch (fieldName) {
             case 'coursename':
                 fieldValidation.coursename = value.match(/^[a-zA-Z- ,&0-9+]+$/i);
@@ -47,6 +47,10 @@ class AddCourse extends Component {
                 break;
             case 'description':
                 fieldValidation.description = value.match(/^[a-zA-Z- ,&0-9+]+$/i);
+                fieldValidationErrors.description = fieldValidation.description ? '' : ' Invalid description'
+                break;
+            case 'rupee':
+                fieldValidation.description = value.match(/^[0-9+]+$/i);
                 fieldValidationErrors.description = fieldValidation.description ? '' : ' Invalid description'
                 break;
             default:
@@ -61,7 +65,7 @@ class AddCourse extends Component {
     validateForm() {
         this.setState({
             formValid: this.state.fieldsValid.coursename &&
-                this.state.fieldsValid.description
+                this.state.fieldsValid.description 
         });
     }
     componentWillReceiveProps(nextProps, prevProps) {
@@ -79,6 +83,7 @@ class AddCourse extends Component {
                         editData: {
                             coursename: courses[0].coursename,
                             description: courses[0].description,
+                            rupee: courses[0].rupee,
                             catId: parseInt(courses[0].catId),
                             subcatId: parseInt(courses[0].subcatId)
                         },
@@ -103,7 +108,6 @@ class AddCourse extends Component {
     }
 
     inputHandler(e) {
-        //console.log(e.target.value)
         const name = e.target.name;
         const value = e.target.value;
         this.setState({ [name]: value }, () => { this.validateField(name, value) })
@@ -152,6 +156,7 @@ class AddCourse extends Component {
     btnEdit(e) {
         let coursename = this.state.coursename;
         let description = this.state.description;
+        let rupee = this.state.rupee;
         let catId = this.state.catId;
         let subcatId = this.state.subcatId;
         if (this.state.coursename === "") {
@@ -159,6 +164,9 @@ class AddCourse extends Component {
         }
         if (this.state.description === "") {
             description = this.state.editData.description
+        }
+        if (this.state.rupee === "") {
+            rupee = this.state.editData.rupee
         }
         if (this.state.catId === 0) {
             catId = this.state.editData.catId
@@ -170,6 +178,7 @@ class AddCourse extends Component {
         let formdata = new FormData();
         formdata.append('coursename', coursename);
         formdata.append('description', description);
+        formdata.append('rupee', rupee);
         formdata.append('catId', parseInt(catId));
         formdata.append('subcatId', parseInt(subcatId));
         if (this.state.showimage === false && this.state.displayImage === "") {
@@ -184,6 +193,7 @@ class AddCourse extends Component {
     }
 
     btnAdd(e) {
+        debugger
         e.preventDefault();
         if (this.state.subcatId === 0)
             this.setState({
@@ -206,6 +216,13 @@ class AddCourse extends Component {
                     description: "* Description Required"
                 }
             })
+        if (this.state.rupee === "")
+            this.setState({
+                fieldsErrors: {
+                    ...this.state.fieldsErrors,
+                    rupee: "* rupee Required"
+                }
+            })    
         if (this.state.coursename === "")
             this.setState({
                 fieldsErrors: {
@@ -216,6 +233,7 @@ class AddCourse extends Component {
         let formdata = new FormData();
         formdata.append('coursename', this.state.coursename);
         formdata.append('description', this.state.description);
+        formdata.append('rupee', this.state.rupee);
         formdata.append('catId', this.state.catId);
         formdata.append('subcatId', this.state.subcatId);
         formdata.append('userId', parseInt(localStorage.getItem("userId")));
@@ -225,6 +243,7 @@ class AddCourse extends Component {
         console.log(localStorage.getItem("userId"))
         console.log(this.state.courseImage[0])
         if (this.state.formValid && this.state.catValid && this.state.subcatValid) {
+            debugger
             this.props.action.course.addCourse(formdata);
             this.props.history.push('/courseList');
         }
@@ -278,6 +297,11 @@ class AddCourse extends Component {
                                 {subcategories}
                             </Input>
                             {!this.state.subcatValid ? <span className="chperror">{this.state.fieldsErrors.subcatMsg}</span> : ""}
+                        </FormGroup>
+                        <FormGroup>
+                            <Label className="chphead">Amount in (Rs.)</Label>
+                            <Input type="text" name="rupee" id="rupee" placeholder="Amount" defaultValue={this.state.editData.rupee} onChange={this.inputHandler.bind(this)} />
+                            <span className="chperror">{this.state.fieldsErrors.rupee}</span>
                         </FormGroup>
                         <FormGroup>
                             <Label className="chphead">Upload Image</Label>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Container,  Card, CardBody, CardImg, CardTitle, CardText } from 'reactstrap';
+import { Button, Container, Card, CardBody, CardImg, CardTitle, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import 'antd/dist/antd.css';
@@ -8,6 +8,7 @@ import * as courseAction from '../../action/CourseAction';
 import * as cartAction from '../../action/cartAction';
 import path from '../../path';
 import '../../styling.css'
+import rupe from '../../Logo/rupee.png'
 
 class CourseList extends Component {
 
@@ -41,14 +42,22 @@ class CourseList extends Component {
         let courseList;
         if (this.props.course) {
             courseList = this.props.course.map(course => {
+                let courselength = course.description.length.toString();
+                if (courselength > 20) {
+                    course.description = course.description.substring(0, 19) + "......"
+                }
                 return (
                     <div key={course.id} className="abc1" style={{ height: '330px' }}>
                         <Card>
-                            <CardImg top style={{ height: "50%" }} src={path + course.courseImage} alt="Card image cap" />
+                            <CardImg top style={{ height: "50%" }} onClick={this.btnExplore.bind(this, course.id)} src={path + course.courseImage} alt="Card image cap" />
                             <CardBody style={{ height: "50%" }}>
                                 <CardTitle ><h2>{course.coursename}</h2></CardTitle>
                                 <CardText>{course.description}</CardText>
-                                <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} >Learn More</Button>
+                                <div>
+                                    <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '17px' }} />
+                                    <h5 style={{ marginTop: '-22px', marginLeft: '22px' }}>{course.rupee}</h5>
+                                </div>
+                                <Button outline color="info" outline style={{ marginLeft: '90px', marginTop: '-70px' }} onClick={this.btnExplore.bind(this, course.id)} >Learn More</Button>
                             </CardBody>
                         </Card>
                     </div>

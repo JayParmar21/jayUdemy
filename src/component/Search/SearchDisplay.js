@@ -15,6 +15,7 @@ import HomeLogo from '../../Logo/hom.jpg'
 import HomeLogo2 from '../../Logo/hom2.jpg';
 import HomeLogo3 from '../../Logo/hom3.jpg';
 import HomeLogo4 from '../../Logo/hom4.jpg';
+import rupe from '../../Logo/rupee.png'
 
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
@@ -91,15 +92,22 @@ class SearchDisplay extends Component {
     }
 
     renderCard = (course) => {
+        let courselength = course.description.length.toString();
+        if (courselength > 20) {
+            course.description = course.description.substring(0, 19) + "......"
+        }
         return (
-            <div key={course.id} className="abc1">
+            <div key={course.id} className="abc1" style={{ height: '330px' }}>
                 <Card>
-                    <CardImg top src={path + course.courseImage} alt="Card image cap" />
-                    <CardBody>
-                        <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
+                    <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
+                    <CardBody style={{ height: "50%" }}>
+                        <CardTitle ><h2>{course.coursename}</h2></CardTitle>
                         <CardText>{course.description}</CardText>
-                        <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} style={{ marginLeft: '-10px' }} >Learn More</Button>
-                        <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginRight: '-10px', marginLeft: '10px' }}>Add To Cart</Button>
+                        <div>
+                            <img src={rupe} alt="category" style={{ marginTop: '17px' }} className="rupesIcon" />
+                            <h5 style={{ marginTop: '-22px', marginLeft: '22px' }}>{course.rupee}</h5>
+                        </div>
+                        <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Add To Cart</Button>
                     </CardBody>
                 </Card>
 
@@ -120,10 +128,14 @@ class SearchDisplay extends Component {
         })
     }
     renderCard1 = (course) => {
+        let courselength = course.description.length.toString();
+        if (courselength > 20) {
+            course.description = course.description.substring(0, 19) + "......"
+        }
         return (
             <div key={course.id} className="abc1">
                 <Card>
-                    <CardImg top src={path + course.courseImage} alt="Card image cap" />
+                    <CardImg top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
                     <CardBody>
                         <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
                         <CardText>{course.description}</CardText>
@@ -175,18 +187,25 @@ class SearchDisplay extends Component {
                 }
             }
         }
+        let courselength = course.description.length.toString();
+        if (courselength > 20) {
+            course.description = course.description.substring(0, 19) + "......"
+        }
         return (
-            <div key={course.id} className="abc1">
+            <div key={course.id} className="abc1" style={{ height: '330px' }}>
                 <Card>
-                    <CardImg top src={path + course.courseImage} alt="Card image cap" />
-                    <CardBody>
-                        <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
+                    <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
+                    <CardBody style={{ height: "50%" }}>
+                        <CardTitle ><h2>{course.coursename}</h2></CardTitle>
                         <CardText>{course.description}</CardText>
-                        <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} style={{ marginLeft: '-10px' }} >Learn More</Button>
+                        <div>
+                            <img src={rupe} alt="category" style={{ marginTop: '17px' }} className="rupesIcon" />
+                            <h5 style={{ marginTop: '-22px', marginLeft: '22px' }}>{course.rupee}</h5>
+                        </div>
                         {bought ? "" :
                             ((addedToCart && loginCart) ?
-                                <Button outline onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginRight: '-10px', marginLeft: '10px' }}>Add To Cart</Button>
-                                : <Button outline onClick={this.btnGoCart.bind(this)} style={{ marginRight: '-10px', marginLeft: '10px' }}>Go to Cart</Button>)
+                                <Button outline onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Add To Cart</Button>
+                                : <Button outline onClick={this.btnGoCart.bind(this)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Go to Cart</Button>)
                         }
                     </CardBody>
                 </Card>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Card, Button, CardImg, CardTitle, CardText,CardBody } from 'reactstrap';
+import { Container, Card, Button, CardImg, CardTitle, CardText, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 
@@ -34,22 +34,30 @@ class MyCourse extends Component {
             pathname: '/addCourse/' + courseId
         })
     }
-
+    btnExplore(courseId, e) {
+        this.props.history.push({
+            pathname: '/exploreCourse/' + courseId
+        })
+    }f
     render() {
         let courseList;
 
 
         if (this.props.coursebyuser) {
             courseList = this.props.coursebyuser.map(course => {
+                let courselength = course.description.length.toString();
+                if (courselength > 20) {
+                    course.description = course.description.substring(0, 19) + "......"
+                }
                 return (
                     <div key={course.id} className="abc1" style={{ height: '330px' }}>
                         <Card>
-                            <CardImg top style={{ height: "50%" }}  src={path + course.courseImage} alt="Card image cap" />
+                            <CardImg top style={{ height: "50%" }} onClick={this.btnExplore.bind(this, course.id)} src={path + course.courseImage} alt="Card image cap" />
                             <CardBody style={{ height: "50%" }}>
                                 <CardTitle ><h2>{course.coursename}</h2></CardTitle>
                                 <CardText>{course.description}</CardText>
                                 <Button outline color="info" onClick={this.btnAddChapter.bind(this, course.id)}>Add Chapter</Button>
-                                <Button outline color="danger" outline style={{ marginLeft: '35px' }} onClick={this.btnEdit.bind(this, course.id)}>Edit</Button>
+                                <Button outline color="danger" outline style={{ marginLeft: '35px'  }} onClick={this.btnEdit.bind(this, course.id)}>Edit</Button>
                             </CardBody>
                         </Card>
                     </div>

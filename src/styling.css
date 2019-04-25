@@ -373,3 +373,7 @@ figure:hover+span {
 .cartbody{
     background-color: burlywood;
 }
+.rupesIcon {
+    height: 18px;
+    width: 18px;
+}

@@ -119,12 +119,9 @@ button:hover {
     position: relative;
     height: 110vh !important ;
     overflow: hidden;
-    /* animation: spin 3s linear infinite; */
+    
 }
-/* @keyframes spin{
-	from{transform:rotateX(0deg)}
-	to{transform:rotateX(90deg)}	
-} */
+
 
 .previousButton, .nextButton {
 		position: absolute;

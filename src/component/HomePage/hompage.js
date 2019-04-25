@@ -10,12 +10,15 @@ import { notification } from 'antd';
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 
+import { Slide } from 'react-slideshow-image';
+
 import * as courseAction from "../../action/CourseAction"
 import * as cartAction from '../../action/cartAction'
 import HomeLogo from '../../Logo/hom.jpg';
 import HomeLogo2 from '../../Logo/hom2.jpg';
 import HomeLogo3 from '../../Logo/hom3.jpg';
 import HomeLogo4 from '../../Logo/hom4.jpg';
+import rupe from '../../Logo/rupee.png'
 import path from '../../path'
 import "../../styling.css"
 import "../../stylesh.css"
@@ -27,6 +30,12 @@ const content = [
     { image: HomeLogo3 },
     { image: HomeLogo4 }
 ];
+const fadeProperties = {
+    duration: 5000,
+    transitionDuration: 500,
+    infinite: false,
+    indicators: true
+}
 class HomePage extends Component {
     state = {
         width: window.innerWidth,
@@ -67,7 +76,9 @@ class HomePage extends Component {
                 courseId: courseId
             }
             if (this.props.token) {
+                debugger
                 this.props.action.cart.addToCart(data);
+                debugger
             }
             else {
                 cartData = JSON.parse(localStorage.getItem("cart"));
@@ -121,18 +132,25 @@ class HomePage extends Component {
                 }
             }
         }
+        let courselength = course.description.length.toString();
+        if (courselength > 20) {
+            course.description = course.description.substring(0, 19) + "......"
+        }
         return (
             <div key={course.id} className="abc1" style={{ height: '330px' }}>
                 <Card >
-                    <CardImg style={{ height: "50%" }} src={path + course.courseImage} alt="Card image cap" />
+                    <CardImg style={{ height: "50%" }} onClick={this.btnExplore.bind(this, course.id)} src={path + course.courseImage} alt="Card image cap" />
                     <CardBody style={{ height: "50%" }}>
                         <CardTitle ><h2>{course.coursename}</h2></CardTitle>
                         <CardText >{course.description}</CardText>
-                        <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} style={{ marginLeft: '-10px' }} >Learn More</Button>
+                        <div>
+                            <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '17px' }} />
+                            <h5 style={{ marginTop: '-22px', marginLeft: '22px' }}>{course.rupee}</h5>
+                        </div>
                         {bought ? "" :
                             ((addedToCart && loginCart) ?
-                                <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginRight: '-10px', marginLeft: '10px' }}>Add To Cart</Button>
-                                : <Button outline onClick={this.btnGoCart.bind(this)} style={{ marginRight: '-10px', marginLeft: '10px' }}>Go to Cart</Button>)
+                                <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Add To Cart</Button>
+                                : <Button outline onClick={this.btnGoCart.bind(this)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Go to Cart</Button>)
                         }
                     </CardBody>
                 </Card>
@@ -140,15 +158,22 @@ class HomePage extends Component {
         )
     }
     renderMedia1(course) {
+        let courselength = course.description.length.toString();
+        if (courselength > 20) {
+            course.description = course.description.substring(0, 19) + "......"
+        }
         return (
             <div key={course.id} className="abc1" style={{ height: '330px' }}>
                 <Card>
-                    <CardImg style={{ height: "50%" }} top src={path + course.courseImage} alt="Card image cap" />
+                    <CardImg style={{ height: "50%" }} onClick={this.btnExplore.bind(this, course.id)} top src={path + course.courseImage} alt="Card image cap" />
                     <CardBody style={{ height: "50%" }}>
                         <CardTitle ><h2>{course.coursename}</h2></CardTitle>
                         <CardText >{course.description}</CardText>
-                        <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.id)} style={{ marginLeft: '-10px' }} >Learn More</Button>
-                        <Button outline color="danger" outline onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginRight: '-10px', marginLeft: '10px' }} >Add To Cart</Button>
+                        <div>
+                            <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '17px' }} />
+                            <h5 style={{ marginTop: '-22px', marginLeft: '22px' }}>{course.rupee}</h5>
+                        </div>
+                        <Button outline color="danger" outline onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button>
                     </CardBody>
                 </Card>
             </div>
@@ -180,7 +205,7 @@ class HomePage extends Component {
 
         return (
             <div className="hrelative">
-                <Slider className="slider-wrapper" >
+                <Slider  className="slider-wrapper" >
                     {sliderimg}
                 </Slider>
                 <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>
