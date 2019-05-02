@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, DropdownItem, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Button, Collapse, Dropdown, DropdownToggle, DropdownMenu, Input, InputGroup, InputGroupAddon, } from 'reactstrap';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { withRouter } from "react-router-dom";
@@ -134,7 +135,6 @@ class Header extends Component {
             ddlogoutopen: !prevState.ddlogoutopen
         }));
     }
-
     btnSearchResult(courseId, e) {
         e.preventDefault();
         this.props.action.course.getCourseByCourseID(courseId);
@@ -146,7 +146,6 @@ class Header extends Component {
     onMouseEnter() {
         this.setState({ dropdownOpen: true });
     }
-
     onMouseLeave() {
         this.setState({ dropdownOpen: false });
     }
@@ -160,24 +159,29 @@ class Header extends Component {
                 );
             })
         }
-
-
         let token = this.props.token;
         let role = parseInt(this.props.Role);
 
         let categories = "";
         if (this.props.category) {
             categories = this.props.category.map(cat => {
-                return <DropdownItem key={cat.id} onClick={this.onSelect.bind(this, cat.id)}>{cat.name}</DropdownItem>
+                return <DropdownItem  key={cat.id} onClick={this.onSelect.bind(this, cat.id)}>{cat.name}</DropdownItem>
             })
         }
 
+        let categories1 = "";
+        if (this.props.category) {
+            categories1 = this.props.category.map(cat => {
+                return <NavLink key={cat.id} onClick={this.onSelect.bind(this, cat.id)}>{cat.name}</NavLink>
+                    
+            })
+        }
         return (
             <div className="header" style={{ marginTop: '-75px' }}>
                 <Login isOpen={this.state.LoginModal} toggle={this.toggleLogin.bind(this)} toggleModals={this.toggleLinks.bind(this)}></Login>{' '}
                 <Register isOpen={this.state.RegisterModal} toggle={this.toggleRegister.bind(this)} toggleModals={this.toggleLinks.bind(this)}></Register>
                 <Navbar className="navbar" light expand="md" style={{ height: '65px' }}>
-                    <NavbarBrand href="/"><img src={ulogo} alt="ulogo" style={{ height: '100px', width: '150px' }}></img></NavbarBrand>
+                    <NavbarBrand href="/"><img src={ulogo} alt="ulogo" style={{ height: '90px', width: '150px' }}></img></NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav>
@@ -188,9 +192,7 @@ class Header extends Component {
                                     <Dropdown className="d-inline-block" onMouseOver={this.onMouseEnter} onMouseLeave={this.onMouseLeave} isOpen={this.state.dropdownOpen} toggle={this.toggle} >
                                         <DropdownToggle style={{ background: "white", color: " black" }} caret>Categories </DropdownToggle>
                                         <DropdownMenu>
-                                            <DropdownItem>
                                             {categories}
-                                            </DropdownItem>
                                         </DropdownMenu>
                                     </Dropdown>
                                 </NavLink>
@@ -252,6 +254,11 @@ class Header extends Component {
                             </NavItem>
                         </Nav>
                     </Collapse>
+                </Navbar>
+                <Navbar style={{ backgroundImage: "linear-gradient(to right, silver , gray)" }}>
+                    <Nav style={{ marginLeft: "33%"}}>
+                    {categories1}
+                    </Nav>
                 </Navbar>
             </div>
         )

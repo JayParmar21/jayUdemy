@@ -104,7 +104,7 @@ class Register extends Component {
         return (
             <div>
                 <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className="loginmodel">
-                    <ModalHeader toggle={this.props.toggle}>Sign Up and Start Learning!</ModalHeader>
+                    <ModalHeader toggle={this.props.toggle}>Sign Up</ModalHeader>
                     <ModalBody>
                         {(this.props.err_msg !== "" && this.props.err_msg !== undefined) ? <span className="chperror">{this.props.err_msg}</span> : ""}
                         <Form>
@@ -124,10 +124,10 @@ class Register extends Component {
                                 <Label>Role</Label>
                                 <FormGroup check>
                                     <Label check>
-                                        <Input type="radio" name="role" onChange={this.inputChangeHandler.bind(this)} value="Instructor" checked={(this.state.role) === 1 ? true : false} />Instructor
+                                        <Input type="radio" name="role" onChange={this.inputChangeHandler.bind(this)} value="Instructor" checked={(this.state.role) === 1 ? true : false} />Admin
                                     </Label><br />
                                     <Label check>
-                                        <Input type="radio" name="role" onChange={this.inputChangeHandler.bind(this)} value="Student" checked={(this.state.role) === 2 ? true : false} />Student
+                                        <Input type="radio" name="role" onChange={this.inputChangeHandler.bind(this)} value="Student" checked={(this.state.role) === 2 ? true : false} />User
                                     </Label>
                                 </FormGroup>
                             </FormGroup>

@@ -77,7 +77,7 @@ class Login extends Component {
         return (
             <div>
                 <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className="loginmodel">
-                    <ModalHeader toggle={this.props.toggle}>Log In to Your Account!</ModalHeader>
+                    <ModalHeader toggle={this.props.toggle}>Log In</ModalHeader>
                     <ModalBody>
                         {(this.props.err_msg !== "" && this.props.err_msg !== undefined) ? <span className="chperror">{this.props.err_msg}</span> : ""}
                         <Form>

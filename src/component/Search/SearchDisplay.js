@@ -42,32 +42,7 @@ class SearchDisplay extends Component {
     };
 
     btnAddToCart(courseId, e) {
-        if (!this.props.token && this.props.Role == "") {
-            this.openNotificationWithIcon('info', "Please Login First");
-        }
-        else {
-            let cartData = [];
-            let data = {
-                userId: parseInt(this.props.userId),
-                courseId: courseId
-            }
-            if (this.props.token) {
-                this.props.action.cart.addToCart(data);
-            }
-            else {
-                cartData = JSON.parse(localStorage.getItem("cart"));
-                if (cartData === null) {
-                    cartData = [];
-                }
-                cartData.push({ courseId: courseId });
-                localStorage.setItem("cart", JSON.stringify(cartData));
-            }
-            this.openNotificationWithIcon('success', "Successfully added to cart");
-        }
-    }
-
-    btnAddToCart(courseId, e) {
-        if (!this.props.token && this.props.Role == "") {
+        if (!this.props.token && this.props.Role === "") {
             this.openNotificationWithIcon('info', "Please Login First");
         }
         else {
@@ -140,7 +115,7 @@ class SearchDisplay extends Component {
                         <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
                         <CardText>{course.description}</CardText>
                         <Button outline color="info" onClick={this.btnAddChapter.bind(this, course.id)}>Add Chapter</Button>
-                        <Button outline color="danger" outline style={{ marginLeft: '35px' }} onClick={this.btnEdit.bind(this, course.id)}>Edit</Button>
+                        <Button outline color="danger" style={{ marginLeft: '35px' }} onClick={this.btnEdit.bind(this, course.id)}>Edit</Button>
                     </CardBody>
                 </Card>
 

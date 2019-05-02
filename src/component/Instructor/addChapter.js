@@ -44,7 +44,7 @@ class AddChapter extends Component {
             if (types.every(type => files[x].type !== type)) {
                 err += files[x].type + ' is not a supported format\n';
             }
-        };
+        }
         if (err !== '') {
             this.setState({ files: [] })
             return false;

@@ -38,7 +38,7 @@ class MyCourse extends Component {
         this.props.history.push({
             pathname: '/exploreCourse/' + courseId
         })
-    }f
+    } f
     render() {
         let courseList;
 
@@ -57,7 +57,7 @@ class MyCourse extends Component {
                                 <CardTitle ><h2>{course.coursename}</h2></CardTitle>
                                 <CardText>{course.description}</CardText>
                                 <Button outline color="info" onClick={this.btnAddChapter.bind(this, course.id)}>Add Chapter</Button>
-                                <Button outline color="danger" outline style={{ marginLeft: '35px'  }} onClick={this.btnEdit.bind(this, course.id)}>Edit</Button>
+                                <Button outline color="danger" style={{ marginLeft: '35px' }} onClick={this.btnEdit.bind(this, course.id)}>Edit</Button>
                             </CardBody>
                         </Card>
                     </div>

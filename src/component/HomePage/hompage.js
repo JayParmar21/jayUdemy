@@ -6,11 +6,10 @@ import { bindActionCreators } from "redux";
 
 
 import { notification } from 'antd';
-
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 
-import { Slide } from 'react-slideshow-image';
+//import { Slide } from 'react-slideshow-image';
 
 import * as courseAction from "../../action/CourseAction"
 import * as cartAction from '../../action/cartAction'
@@ -23,6 +22,7 @@ import path from '../../path'
 import "../../styling.css"
 import "../../stylesh.css"
 import '../../slider-animation.css'
+import '../../imagesslide.css'
 
 const content = [
     { image: HomeLogo },
@@ -30,12 +30,13 @@ const content = [
     { image: HomeLogo3 },
     { image: HomeLogo4 }
 ];
-const fadeProperties = {
-    duration: 5000,
-    transitionDuration: 500,
-    infinite: false,
-    indicators: true
-}
+// const fadeProperties = {
+//     duration: 5000,
+//     transitionDuration: 500,
+//     infinite: false,
+//     indicators: true,
+//     arrows: true
+// }
 class HomePage extends Component {
     state = {
         width: window.innerWidth,
@@ -76,9 +77,7 @@ class HomePage extends Component {
                 courseId: courseId
             }
             if (this.props.token) {
-                debugger
                 this.props.action.cart.addToCart(data);
-                debugger
             }
             else {
                 cartData = JSON.parse(localStorage.getItem("cart"));
@@ -173,7 +172,7 @@ class HomePage extends Component {
                             <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '17px' }} />
                             <h5 style={{ marginTop: '-22px', marginLeft: '22px' }}>{course.rupee}</h5>
                         </div>
-                        <Button outline color="danger" outline onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button>
+                        <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button>
                     </CardBody>
                 </Card>
             </div>
@@ -198,14 +197,14 @@ class HomePage extends Component {
         sliderimg = content.map((item, index) => {
             return (
                 <div key={index} className="slider-content"
-                    style={{ background: `url('${item.image}') no-repeat center center`, height: '100%' }}>
+                    style={{ backgroundImage: `url('${item.image}') `, height: '100%' }}>
                 </div>
             )
         })
 
         return (
             <div className="hrelative">
-                <Slider  className="slider-wrapper" >
+                <Slider className="slider-wrapper" >
                     {sliderimg}
                 </Slider>
                 <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>

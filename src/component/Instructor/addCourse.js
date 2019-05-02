@@ -19,16 +19,16 @@ class AddCourse extends Component {
             coursename: "",
             description: "",
             catId: 0,
-            rupee:"",
+            rupee: "",
             subcatId: 0,
-            fieldsErrors: { coursename: '', description: '', catMsg: "", subcatMsg: "",rupee:"" },
-            fieldsValid: { coursename: false, description: false,rupee:false },
+            fieldsErrors: { coursename: '', description: '', catMsg: "", subcatMsg: "", rupee: "" },
+            fieldsValid: { coursename: false, description: false, rupee: false },
             formValid: false,
             catValid: false,
             subcatValid: false,
             edit: false,
             courseId: 0,
-            editData: { coursename: "", description: "", catId: 0, subcatId: 0, courseImage: "",rupee:"" },
+            editData: { coursename: "", description: "", catId: 0, subcatId: 0, courseImage: "", rupee: "" },
             courseImage: [],
             showimage: false,
             displayImage: ""
@@ -46,12 +46,12 @@ class AddCourse extends Component {
                 fieldValidationErrors.coursename = fieldValidation.coursename ? '' : ' Invalid coursename'
                 break;
             case 'description':
-                fieldValidation.description = value.match(/^[a-zA-Z- ,&0-9+]+$/i);
+                fieldValidation.description = value.match(/^[a-zA-Z- ,&0-9+,[\W]+$/i);
                 fieldValidationErrors.description = fieldValidation.description ? '' : ' Invalid description'
                 break;
             case 'rupee':
-                fieldValidation.description = value.match(/^[0-9+]+$/i);
-                fieldValidationErrors.description = fieldValidation.description ? '' : ' Invalid description'
+                fieldValidation.rupee = value.match(/^[0-9]+$/i);
+                fieldValidationErrors.rupee = fieldValidation.rupee ? '' : ' Invalid Rupee'
                 break;
             default:
                 break;
@@ -65,7 +65,8 @@ class AddCourse extends Component {
     validateForm() {
         this.setState({
             formValid: this.state.fieldsValid.coursename &&
-                this.state.fieldsValid.description 
+                this.state.fieldsValid.description &&
+                this.state.fieldsValid.rupee
         });
     }
     componentWillReceiveProps(nextProps, prevProps) {
@@ -220,9 +221,9 @@ class AddCourse extends Component {
             this.setState({
                 fieldsErrors: {
                     ...this.state.fieldsErrors,
-                    rupee: "* rupee Required"
+                    rupee: "* Rupee Required"
                 }
-            })    
+            })
         if (this.state.coursename === "")
             this.setState({
                 fieldsErrors: {
@@ -240,8 +241,8 @@ class AddCourse extends Component {
         if (this.state.courseImage && this.state.showimage) {
             formdata.append('courseImage', this.state.courseImage[0]);
         }
-        console.log(localStorage.getItem("userId"))
-        console.log(this.state.courseImage[0])
+        // console.log(localStorage.getItem("userId"))
+        // console.log(this.state.courseImage[0])
         if (this.state.formValid && this.state.catValid && this.state.subcatValid) {
             debugger
             this.props.action.course.addCourse(formdata);
@@ -269,7 +270,7 @@ class AddCourse extends Component {
         console.log(this.props.getcourse.getCourseByCid)
         return (
             <div>
-                <Container style={{ marginTop: "30px", width: "40%", boxShadow: "4px 2px 4px 2px", color: "grey", marginBottom: "30px", boxShadow: "0 0 5px 5px" }}>
+                <Container style={{ marginTop: "30px", width: "40%", color: "grey", marginBottom: "30px", boxShadow: "0 0 5px 5px" }}>
                     {!this.state.edit ? <h1>Add Course</h1> : <h1>Edit Course</h1>}
                     <Form >
                         <FormGroup>
@@ -348,7 +349,6 @@ const mapStateToProps = state => {
         category: state.category.category,
         subcategory: state.subcategory.subcategory,
         getcourse: state.course.getCourseByCid
-
     }
 }
 

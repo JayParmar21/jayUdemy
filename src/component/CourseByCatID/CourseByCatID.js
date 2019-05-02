@@ -38,6 +38,12 @@ class CourseByCID extends Component {
             pathname: '/addChapter/' + courseId
         })
     }
+    btnEdit(courseId, e) {
+        e.preventDefault();
+        this.props.history.push({
+            pathname: '/addCourse/' + courseId
+        })
+    }
     btnGoCart(e) {
         this.props.history.push('/cart');
     }
@@ -155,13 +161,14 @@ class CourseByCID extends Component {
                     course.description = course.description.substring(0, 19) + "......"
                 }
                 return (
-                    <div key={course.id} className="abc1">
+                    <div key={course.id} className="abc1" style={{ height: '330px' }}>
                         <Card>
-                            <CardImg top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
-                            <CardBody>
-                                <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
+                            <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
+                            <CardBody style={{ height: "50%" }}>
+                                <CardTitle ><h2>{course.coursename}</h2></CardTitle>
                                 <CardText>{course.description}</CardText>
                                 <Button outline color="info" onClick={this.btnAddChapter.bind(this, course.id)}>Add Chapter</Button>
+                                <Button outline color="danger" style={{ marginLeft: '35px' }} onClick={this.btnEdit.bind(this, course.id)}>Edit</Button>
                             </CardBody>
                         </Card>
                     </div>
@@ -194,7 +201,7 @@ class CourseByCID extends Component {
                                     <img src={rupe} alt="category" style={{ marginTop: '17px' }} className="rupesIcon" />
                                     <h5 style={{ marginTop: '-22px', marginLeft: '22px' }}>{course.rupee}</h5>
                                 </div>
-                                <Button outline color="danger" outline onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button>
+                                <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button>
                             </CardBody>
                         </Card>
                     </div>

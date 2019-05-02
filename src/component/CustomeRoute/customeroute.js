@@ -32,6 +32,9 @@ class CRoute extends Component {
         else if (isUserLoggedIn && rest.path === "/myCourse" && userCurrentRole !== 1) {
             redirectTo = "/"
         }
+        else if (isUserLoggedIn && rest.path === "/courseList" && userCurrentRole !== 1) {
+            redirectTo = "/"
+        }
         return (
             <Route
                 {...rest}

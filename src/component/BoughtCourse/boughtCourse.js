@@ -37,7 +37,7 @@ class BoughtCourse extends Component {
                             <CardBody>
                                 <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
                                 <CardText>{course.description}</CardText>
-                                <Button outline color="info" outline onClick={this.btnExplore.bind(this, course.courseId)} >Learn More</Button>
+                                <Button outline color="info" onClick={this.btnExplore.bind(this, course.courseId)} >Learn More</Button>
                             </CardBody>
                         </Card>
                     </div>

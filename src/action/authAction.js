@@ -40,9 +40,7 @@ export const logoutUser = () => {
 };
 
 export const RegisterUser = (credentials) => {
-    debugger
     return (dispatch) => {
-        debugger
         authService.signUp(credentials)
             .then((response) => {
                 if (response.status === 200) {
