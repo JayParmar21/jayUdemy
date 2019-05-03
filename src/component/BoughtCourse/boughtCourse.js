@@ -18,7 +18,6 @@ class BoughtCourse extends Component {
     }
 
     btnExplore(courseId, e) {
-        debugger
         e.preventDefault();
         this.props.history.push({
             pathname: '/exploreCourse/' + courseId
@@ -29,15 +28,18 @@ class BoughtCourse extends Component {
         let buyCourse = [];
         if (this.props.boughtCourse) {
             buyCourse = this.props.boughtCourse.map(course => {
-                debugger
+                let courselength = course.description.length.toString();
+                if (courselength > 20) {
+                    course.description = course.description.substring(0, 19) + "......"
+                }
                 return (
-                    <div key={course.id} className="abc1">
+                    <div key={course.id} className="abc1" style={{ height: '330px' }}>
                         <Card>
-                            <CardImg top width="10px" src={path + course.courseImage} alt="Card image cap" />
-                            <CardBody>
+                            <CardImg top style={{ height: "50%" }}src={path + course.courseImage} onClick={this.btnExplore.bind(this,course.courseId)} alt="Card image cap" />
+                            <CardBody style={{ height: "50%" }}>
                                 <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
                                 <CardText>{course.description}</CardText>
-                                <Button outline color="info" onClick={this.btnExplore.bind(this, course.courseId)} >Learn More</Button>
+                                <Button outline color="info" onClick={this.btnExplore.bind(this, course.courseId)}  >Learn More</Button>
                             </CardBody>
                         </Card>
                     </div>

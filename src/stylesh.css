@@ -89,6 +89,11 @@ button:hover {
   position: relative;
   height: 70vh;
   overflow: hidden;
+  transition-duration: 500;
+  animation-duration: 2000;
+  position: relative;
+  height: 110vh !important ;
+  overflow: hidden;
 }
 
 .slide {
@@ -115,14 +120,6 @@ button:hover {
     left: 0px;
     z-index: 0; 
 }
-.slider-wrapper {
-    position: relative;
-    height: 110vh !important ;
-    overflow: hidden;
-    
-}
-
-
 .previousButton, .nextButton {
 		position: absolute;
 		top: 50%;

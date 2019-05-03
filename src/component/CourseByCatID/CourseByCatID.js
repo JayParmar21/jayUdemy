@@ -109,7 +109,6 @@ class CourseByCID extends Component {
             }
         }
         else if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length !== 0) {
-            debugger
             let carts = JSON.parse(localStorage.getItem("cart"));
             let cid = [];
             carts.map(c => {

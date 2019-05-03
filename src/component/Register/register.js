@@ -55,7 +55,6 @@ class Register extends Component {
     }
 
     btnRegisterClick() {
-        debugger
         let fieldsErrors = {};
         if (this.state.password === "") {
             fieldsErrors = {
@@ -91,7 +90,6 @@ class Register extends Component {
             }
         }
         if (!fieldsErrors.email && !fieldsErrors.password && !fieldsErrors.fullname) {
-            debugger
             this.props.action.register.RegisterUser(this.state);
         } else {
             this.setState({

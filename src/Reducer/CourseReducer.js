@@ -30,7 +30,6 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { coursebyuser: action.course, error_msg: "" });
         }
         case DELETE_COURSE: {
-            debugger
             return Object.assign({}, state, { coursebyuser: state.coursebyuser.filter(data => data.id !== action.courseId) });
         }
         case UPDATE_COURSE: {

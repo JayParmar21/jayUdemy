@@ -90,12 +90,9 @@ export const getCourseByUID = (userId) => {
 };
 
 export const deleteCourse = (courseId) => {
-    debugger
     return (dispatch) => {
-        debugger
         courseService.deleteCourse(courseId)
             .then((response) => {
-                debugger
                 if (response.status === 200) {
                     dispatch({
                         type: DELETE_COURSE,

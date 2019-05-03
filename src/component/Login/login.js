@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 
 import * as loginAction from '../../action/authAction';
 
+import loginlogo from '../../Logo/login.png'
+
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -81,6 +83,9 @@ class Login extends Component {
                     <ModalBody>
                         {(this.props.err_msg !== "" && this.props.err_msg !== undefined) ? <span className="chperror">{this.props.err_msg}</span> : ""}
                         <Form>
+                            <FormGroup style={{ textAlign: 'center' }}>
+                                <img src={loginlogo} className="loginlogo" alt=""></img>
+                            </FormGroup>
                             <FormGroup>
                                 <Input type="email" name="email" id="email" placeholder="Email" onChange={this.inputChangeHandler.bind(this)} value={this.state.email} />
                                 <span className="chperror">{this.state.fieldsErrors.email}</span>

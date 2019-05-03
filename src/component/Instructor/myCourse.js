@@ -38,7 +38,7 @@ class MyCourse extends Component {
         this.props.history.push({
             pathname: '/exploreCourse/' + courseId
         })
-    } f
+    } 
     render() {
         let courseList;
 

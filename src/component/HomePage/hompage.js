@@ -30,32 +30,27 @@ const content = [
     { image: HomeLogo3 },
     { image: HomeLogo4 }
 ];
-// const fadeProperties = {
-//     duration: 5000,
-//     transitionDuration: 500,
-//     infinite: false,
-//     indicators: true,
-//     arrows: true
-// }
 class HomePage extends Component {
     state = {
         width: window.innerWidth,
-        height: window.innerHeight - 60
+        height: window.innerHeight - 60,
+
     }
     componentDidMount() {
-        this.props.action.course.getCourse();
         if (this.props.token && this.props.userId) {
             this.props.action.cart.getCartByUser(parseInt(this.props.userId))
             this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
         }
+        this.props.action.course.getCourse();
     }
-
     openNotificationWithIcon = (type, msg) => {
         notification[type]({
             message: msg
         });
     };
-
+    // autoplay = () => {
+    //     this.setState({ autoplay: !this.state.autoplay });
+    // };
     btnExplore(courseId, e) {
         this.props.history.push({
             pathname: '/exploreCourse/' + courseId
@@ -196,7 +191,7 @@ class HomePage extends Component {
         let sliderimg = []
         sliderimg = content.map((item, index) => {
             return (
-                <div key={index} className="slider-content"
+                <div key={index} className="slider-content" 
                     style={{ backgroundImage: `url('${item.image}') `, height: '100%' }}>
                 </div>
             )
@@ -204,7 +199,7 @@ class HomePage extends Component {
 
         return (
             <div className="hrelative">
-                <Slider className="slider-wrapper" >
+                <Slider className="slider-wrapper"  >
                     {sliderimg}
                 </Slider>
                 <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>

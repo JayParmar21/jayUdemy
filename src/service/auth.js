@@ -5,6 +5,5 @@ export function login(credential) {
 }
 
 export function signUp(data) {
-    debugger
     return BaseService.post('/user/signup', data);
 }

@@ -7,6 +7,8 @@ import { notification } from 'antd';
 import * as cartAction from '../../action/cartAction';
 import * as courseAction from '../../action/CourseAction';
 
+import Payment from '../payment/payment'
+
 import rupe from '../../Logo/rupee.png'
 
 import path from '../../path';
@@ -15,8 +17,19 @@ import '../../styling.css';
 
 
 class Cart extends Component {
+
     state = {
         deleteCart: false
+    }
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isOpen: false,
+            PaymentModal: false,
+        };
+        this.toggle = this.toggle.bind(this);
+        this.togglePayment = this.togglePayment.bind(this);
     }
 
     btnRemoveCourse(cartId, e) {
@@ -26,6 +39,16 @@ class Cart extends Component {
     btnRemove(cartId, e) {
         e.preventDefault();
         this.props.action.cart.removeFromCart(cartId);
+    }
+    toggle() {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+    togglePayment() {
+        this.setState(prevState => ({
+            PaymentModal: !prevState.PaymentModal
+        }));
     }
     componentDidMount() {
         if (this.props.token) {
@@ -84,12 +107,12 @@ class Cart extends Component {
     }
 
     render() {
-        let total=0;
+        let total = 0;
         let carts = [];
         if (this.props.token) {
             if (this.props.getCart && this.props.getCart.length !== 0) {
                 this.props.getCart.map((cart, i) => {
-                    total=total+cart.rupee
+                    total = total + cart.rupee
                     return carts.push(<tr key={cart.id}>
                         <td><img src={path + 'thumbnail/' + cart.courseImage} alt="" /></td>
                         <td>{cart.coursename}</td>
@@ -143,32 +166,35 @@ class Cart extends Component {
             }
         }
         return (
-            <Container className="marginTop">
-                <h4>Cart</h4>
-                <Table className="marginTop" striped>
-                    <thead>
-                        <tr>
-                            <th>Image</th>
-                            <th>Course</th>
-                            <th>Category</th>
-                            <th>SubCategory</th>
-                            <th><img src={rupe} alt="category" className="rupesIcon" /></th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {carts}
-                    </tbody>
-                </Table>
-                <div><h3>Total Rs.</h3><h4>{total}</h4>
-                {(this.props.getCart.length !== 0) ?
-                    <div>
-                        <Button color="primary" className="buttons" outline onClick={this.btnCheckOut.bind(this, carts)}>Proceed To CheckOut</Button>
-                        <Button color="primary" className="buttons" onClick={this.btnKeepShopping.bind(this)} outline>Keep Shopping</Button>
+            <div>
+                <Payment isOpen={this.state.PaymentModal} toggle={this.togglePayment.bind(this)} ></Payment>{' '}
+                <Container className="marginTop">
+                    <h4>Cart</h4>
+                    <Table className="marginTop" striped>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Course</th>
+                                <th>Category</th>
+                                <th>SubCategory</th>
+                                <th><img src={rupe} alt="category" className="rupesIcon" /></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {carts}
+                        </tbody>
+                    </Table>
+                    <div><h3>Total Rs.</h3><h4>{total}</h4>
+                        {(this.props.getCart.length !== 0) ?
+                            <div>
+                                <Button color="primary" className="buttons" outline onClick={this.togglePayment}>Proceed To Payment</Button>
+                                <Button color="primary" className="buttons" onClick={this.btnKeepShopping.bind(this)} outline>Keep Shopping</Button>
+                            </div>
+                            : null}
                     </div>
-                    : null}
-                </div>
-            </Container>
+                </Container>
+            </div>
         )
     }
 }
