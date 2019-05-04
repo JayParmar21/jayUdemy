@@ -21,10 +21,13 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { course: state.course.concat(action.add_course) });
         }
         case GET_COURSE: {
-            return Object.assign({}, state, { course: action.course, error_msg: "" });
+            return {
+                ...state,
+                course: action.course, error_msg: ""
+            }
         }
         case GET_COURSE_BY_COURSE_ID: {
-            return Object.assign({}, state, { getCourseByCid: action.getCourseByCid, error_msg: "" });
+            return { ...state, getCourseByCid: action.getCourseByCid, error_msg: "" }
         }
         case GET_COURSE_BY_USER: {
             return Object.assign({}, state, { coursebyuser: action.course, error_msg: "" });

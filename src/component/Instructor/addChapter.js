@@ -39,21 +39,31 @@ class AddChapter extends Component {
     checkMimeType = (data) => {
         let files = data;
         let err = '';
-        const types = ['image/png', 'image/jpeg', 'image/gif', 'video/mp4', 'application/pdf', 'text/plain']
-        for (var x = 0; x < files.length; x++) {
-            if (types.every(type => files[x].type !== type)) {
-                err += files[x].type + ' is not a supported format\n';
+        const types = ["image/png", 'image/jpeg', 'image/jpg', 'image/gif', 'video/mp4', 'application/pdf', 'text/plain']
+        // for (var x = 0; x < files.length; x++) {
+        //     if (types.every(type => files[x].type !== type)) {
+        //         err += files[x].type + ' is not a supported format\n';
+        //     }
+        // }
+        // console.log(files)
+        files.forEach(file => {
+            if (types.findIndex(typeeee => ((file || {}).type === typeeee)) < 0) {
+                err = 'File is not a supported format\n'
+                return
+            } else {
+                err = '';
+                return
             }
-        }
+
+        });
         if (err !== '') {
             this.setState({ files: [] })
             return false;
-
         }
         else {
             this.setState({
                 fieldsError: {
-                    files: ""
+                    files: "* file not supported"
                 }
             })
         }
@@ -65,6 +75,7 @@ class AddChapter extends Component {
     }
 
     btnCreateChapter(e) {
+        debugger
         e.preventDefault();
         const { match: { params } } = this.props;
         let fieldsError = { chapterName: "", files: "" };
@@ -95,9 +106,8 @@ class AddChapter extends Component {
             }
             else {
                 this.setState({
-                    fieldsError: {
-                        files: "* file not supported"
-                    }
+                    ...fieldsError,
+                    files: "* file not supported"
                 })
             }
         } else {
@@ -115,6 +125,7 @@ class AddChapter extends Component {
                     <FormGroup>
                         <Label className="chphead">Chapter Name</Label>
                         <Input type="text" name="chapterName" placeholder="Chapter Name" onChange={this.inputChangeHandler.bind(this)} value={this.state.chapterName} />
+                        <span className="chperror" >{this.state.fieldsError.chapterName}</span>
                     </FormGroup>
                     <FormGroup className="chphead">
                         <FilePond

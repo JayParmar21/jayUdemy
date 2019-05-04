@@ -47,6 +47,7 @@ export const getCourse = () => {
 
 export const getCourseByCourseID = (courseId) => {
     return (dispatch) => {
+        debugger
         courseService.getCourseByCourseID(courseId)
             .then((response) => {
                 if (response.status === 200) {

@@ -6,10 +6,10 @@ import { bindActionCreators } from "redux";
 
 
 import { notification } from 'antd';
-import Slider from 'react-animated-slider';
+//import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 
-//import { Slide } from 'react-slideshow-image';
+import { Fade } from 'react-slideshow-image';
 
 import * as courseAction from "../../action/CourseAction"
 import * as cartAction from '../../action/cartAction'
@@ -17,19 +17,19 @@ import HomeLogo from '../../Logo/hom.jpg';
 import HomeLogo2 from '../../Logo/hom2.jpg';
 import HomeLogo3 from '../../Logo/hom3.jpg';
 import HomeLogo4 from '../../Logo/hom4.jpg';
+import HomeLogo5 from '../../Logo/hom5.jpg';
 import rupe from '../../Logo/rupee.png'
 import path from '../../path'
 import "../../styling.css"
 import "../../stylesh.css"
-import '../../slider-animation.css'
+//import '../../slider-animation.css'
 import '../../imagesslide.css'
 
-const content = [
-    { image: HomeLogo },
-    { image: HomeLogo2 },
-    { image: HomeLogo3 },
-    { image: HomeLogo4 }
-];
+const fadeProperties = {
+    duration: 2000,
+    transitionDuration: 3000,
+    infinite: true,
+}
 class HomePage extends Component {
     state = {
         width: window.innerWidth,
@@ -62,7 +62,7 @@ class HomePage extends Component {
     }
 
     btnAddToCart(courseId, e) {
-        if (!this.props.token && this.props.Role == "") {
+        if (!this.props.token && this.props.Role === "") {
             this.openNotificationWithIcon('info', "Please Login First");
         }
         else {
@@ -188,22 +188,46 @@ class HomePage extends Component {
             })
         }
 
-        let sliderimg = []
-        sliderimg = content.map((item, index) => {
-            return (
-                <div key={index} className="slider-content" 
-                    style={{ backgroundImage: `url('${item.image}') `, height: '100%' }}>
-                </div>
-            )
-        })
+        // let sliderimg = []
+        // sliderimg = content.map((item, index) => {
+        //     return (
+        //         <div key={index} className="slider-content" 
+        //             style={{ backgroundImage: `url('${item.image}') `, height: '100%' }}>
+        //         </div>
+        //     )
+        // })
 
         return (
             <div className="hrelative">
-                <Slider className="slider-wrapper"  >
-                    {sliderimg}
-                </Slider>
-                <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>
-                    {this.props.token ? (this.props.Role == 2 ? courseList : "") : courseList1}
+                <Fade {...fadeProperties} >
+                    <div className="each-fade">
+                        <div className="image-container">
+                            <img src={HomeLogo} alt="homelogo" />
+                        </div>
+                    </div>
+                    <div className="each-fade">
+                        <div className="image-container">
+                            <img src={HomeLogo2} alt="HomeLogo2"/>
+                        </div>
+                    </div>
+                    <div className="each-fade">
+                        <div className="image-container" >
+                            <img src={HomeLogo5} alt="HomeLogo5" />
+                        </div>
+                    </div>
+                    <div className="each-fade">
+                        <div className="image-container" >
+                            <img src={HomeLogo3} alt="HomeLogo3"/>
+                        </div>
+                    </div>
+                    <div className="each-fade">
+                        <div className="image-container" >
+                            <img src={HomeLogo4} alt="HomeLogo3" />
+                        </div>
+                    </div>
+                </Fade>
+                <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left',zIndex:9 }}>
+                    {this.props.token ? (parseInt(this.props.Role) === 2 ? courseList : "") : courseList1}
                 </div>
             </div>
         );

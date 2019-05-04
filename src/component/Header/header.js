@@ -80,6 +80,10 @@ class Header extends Component {
         e.preventDefault();
         this.props.history.push('/myCourse');
     }
+    btnUsers(e) {
+        e.preventDefault();
+        this.props.history.push('/user');
+    }
     btnLogout(e) {
         this.props.action.auth.logoutUser();
         localStorage.clear();
@@ -212,7 +216,7 @@ class Header extends Component {
                                 <NavbarBrand href="/" style={{ marginRight: '-40px' }}>
                                     {(token && role === 1) ? " " : <img src={tlogo} alt="tlogo" style={{ height: '42px', width: '50px' }} onClick={this.btnCart.bind(this)}></img>}
                                     {this.props.token ?
-                                        this.props.Role == 2 ?
+                                        parseInt(this.props.Role) === 2 ?
                                             <span className="totalcart">
                                                 <b>{this.props.getCart.length}</b>
                                             </span> : "" :
@@ -221,6 +225,11 @@ class Header extends Component {
                                         </span>
                                     }
                                 </NavbarBrand>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/">
+                                    {(token && role === 1) ? <Button color="info" outline onClick={this.btnUsers.bind(this)} >Users</Button> : ""}
+                                </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/">

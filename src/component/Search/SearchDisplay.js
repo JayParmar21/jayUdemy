@@ -134,7 +134,7 @@ class SearchDisplay extends Component {
                     return boughtCourseId.push(boughtcourse.courseId);
                 })
             }
-            if (userId == this.props.boughtCourse.userId) {
+            if (userId === parseInt(this.props.boughtCourse.userId)) {
                 bought = true;
             }
             else if (boughtCourseId.includes(course.id)) {
@@ -223,7 +223,7 @@ class SearchDisplay extends Component {
                     {sliderimg}
                 </Slider>
                 <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>
-                    {this.props.token ? (this.props.Role == 1 ? courseList : courseList1) : courseList2}
+                    {this.props.token ? (parseInt(this.props.Role) === 1 ? courseList : courseList1) : courseList2}
                 </div>
             </div>
         )

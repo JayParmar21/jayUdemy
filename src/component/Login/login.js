@@ -25,7 +25,7 @@ class Login extends Component {
             if (err_msg === "Password In Correct" || err_msg === "Email Id Already Exist") {
                 this.setState({ err_msg: this.props.err_msg })
             }
-            else if (err_msg === "") {
+            else if (localStorage.getItem("token")) {
                 if (this.props.isOpen) {
                     this.props.toggle();
                     // this.props.history.push('/courseList');

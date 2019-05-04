@@ -3,6 +3,7 @@ const INITIAL_STATE = {
     error_msg: "",
     getCart: [],
     boughtCourse: [],
+    alluser: [],
 }
 
 export const ADD_TO_CART = 'ADD_TO_CART';
@@ -11,6 +12,7 @@ export const GET_CART_BY_USER = 'GET_CART_BY_USER';
 export const DELETE_FROM_CART = 'DELETE_FROM_CART';
 export const BUY_COURSE = 'BUY_COURSE';
 export const GET_BOUGHT_COURSE_BY_USER = 'GET_BOUGHT_COURSE_BY_USER';
+export const GET_BUY_ALL_USER = 'GET_BUY_ALL_USER'
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -25,6 +27,9 @@ export default (state = INITIAL_STATE, action) => {
         }
         case GET_BOUGHT_COURSE_BY_USER: {
             return Object.assign({}, state, { boughtCourse: action.boughtCourse })
+        }
+        case GET_BUY_ALL_USER: {
+            return Object.assign({}, state, { alluser: action.cartall })
         }
         case BUY_COURSE: {
             return Object.assign({}, state, { getCart: [...state.getCart.filter(data => data.id !== action.cartId)] })

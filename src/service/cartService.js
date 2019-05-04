@@ -8,6 +8,10 @@ export function getCartByUser(userId) {
     return BaseService.get('/cart/getByUser/' + userId);
 }
 
+export function getCartAllUser() {
+    return BaseService.get('/cart/getBuyallUser');
+}
+
 export function removeFromCart(cartId) {
     return BaseService.delete('/cart/remove/FromCart/' + cartId);
 }

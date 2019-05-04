@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Switch, withRouter } from 'react-router-dom';
+import { Switch, withRouter } from 'react-router-dom';
 import './App.css';
 import Header from './component/Header/header';
 import CRoute from './component/CustomeRoute/customeroute';
@@ -13,7 +13,8 @@ import ExploreCourse from './component/CourseByCatID/ExploreCourse'
 import Cart from './component/Cart/cart'
 import BoughtCourse from './component/BoughtCourse/boughtCourse'
 import SearchDisplay from "./component/Search/SearchDisplay";
-import Footer from './component/footer/footer'
+import User from './component/Instructor/user'
+//import Footer from './component/footer/footer'
 
 class App extends Component {
   render() {
@@ -31,6 +32,7 @@ class App extends Component {
           <CRoute path="/cart" exact component={Cart} />
           <CRoute path="/boughtCourse" exact component={BoughtCourse} />
           <CRoute path="/searchData/:courseId" exact component={SearchDisplay} />
+          <CRoute path="/user" exact component={User} />
         </Switch>
       </div>
     );

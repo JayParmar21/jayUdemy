@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import 'antd/dist/antd.css';
 
-import { Popconfirm } from 'antd';
-
 import * as courseAction from '../../action/CourseAction';
 import * as cartAction from '../../action/cartAction';
 import path from '../../path';
