@@ -148,13 +148,11 @@ class CourseByCID extends Component {
     }
 
     render() {
-        // console.log(this.props.token)
-        // console.log(this.props.Role)
-        // console.log(this.props.userId)
+        
         let courseList = [];
         if (this.props.courses) {
             courseList = this.props.courses.map(course => {
-                //category = course.category;
+
                 let courselength = course.description.length.toString();
                 if (courselength > 20) {
                     course.description = course.description.substring(0, 19) + "......"

@@ -27,7 +27,7 @@ import '../../imagesslide.css'
 
 const fadeProperties = {
     duration: 2000,
-    transitionDuration: 3000,
+    transitionDuration: 4000,
     infinite: true,
 }
 class HomePage extends Component {
