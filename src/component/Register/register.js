@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input } from 'reactstrap';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
@@ -13,7 +13,7 @@ class Register extends Component {
             fullname: "",
             email: "",
             password: "",
-            role: 1,
+            role: 2,
             fieldsErrors: { fullname: '', email: '', password: '' },
         }
     }
@@ -117,17 +117,6 @@ class Register extends Component {
                             <FormGroup>
                                 <Input type="password" name="password" id="examplePassword" placeholder="Password" onChange={this.inputChangeHandler.bind(this)} />
                                 <span className="chperror">{this.state.fieldsErrors.password}</span>
-                            </FormGroup>
-                            <FormGroup tag="fieldset">
-                                <Label>Role</Label>
-                                <FormGroup check>
-                                    <Label check>
-                                        <Input type="radio" name="role" onChange={this.inputChangeHandler.bind(this)} value="Instructor" checked={(this.state.role) === 1 ? true : false} />Admin
-                                    </Label><br />
-                                    <Label check>
-                                        <Input type="radio" name="role" onChange={this.inputChangeHandler.bind(this)} value="Student" checked={(this.state.role) === 2 ? true : false} />User
-                                    </Label>
-                                </FormGroup>
                             </FormGroup>
                         </Form>
                     </ModalBody>

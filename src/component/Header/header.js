@@ -169,7 +169,7 @@ class Header extends Component {
         let categories = "";
         if (this.props.category) {
             categories = this.props.category.map(cat => {
-                return <DropdownItem  key={cat.id} onClick={this.onSelect.bind(this, cat.id)}>{cat.name}</DropdownItem>
+                return <DropdownItem key={cat.id} onClick={this.onSelect.bind(this, cat.id)}>{cat.name}</DropdownItem>
             })
         }
 
@@ -177,7 +177,7 @@ class Header extends Component {
         if (this.props.category) {
             categories1 = this.props.category.map(cat => {
                 return <NavLink key={cat.id} onClick={this.onSelect.bind(this, cat.id)}>{cat.name}</NavLink>
-                    
+
             })
         }
         return (
@@ -265,8 +265,8 @@ class Header extends Component {
                     </Collapse>
                 </Navbar>
                 <Navbar style={{ backgroundImage: "linear-gradient(to right, silver , gray)" }}>
-                    <Nav style={{ marginLeft: "33%"}}>
-                    {categories1}
+                    <Nav style={{ marginLeft: "33%" }}>
+                        {categories1}
                     </Nav>
                 </Navbar>
             </div>

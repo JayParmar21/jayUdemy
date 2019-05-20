@@ -25,7 +25,7 @@ class CRoute extends Component {
         else if (!isUserLoggedIn && rest.path === "/boughtCourse") {
             redirectTo = "/"
         }
-        else if (isUserLoggedIn && rest.path === "/addCourse" && userCurrentRole !== 1) {
+        else if (isUserLoggedIn && rest.path.includes("/addCourse") && userCurrentRole !== 1) {
             redirectTo = "/"
         }
         else if (isUserLoggedIn && rest.path === "/myCourse" && userCurrentRole !== 1) {

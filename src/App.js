@@ -14,7 +14,6 @@ import Cart from './component/Cart/cart'
 import BoughtCourse from './component/BoughtCourse/boughtCourse'
 import SearchDisplay from "./component/Search/SearchDisplay";
 import User from './component/Instructor/user'
-//import Footer from './component/footer/footer'
 
 class App extends Component {
   render() {

@@ -13,6 +13,7 @@ import ModalDocument from './ModalDocument'
 import path from '../../path'
 import '../../styling.css'
 import 'antd/dist/antd.css';
+//import video from '../../Logo/video.png'
 const Panel = Collapse.Panel;
 
 const customPanelStyle = {
@@ -40,6 +41,7 @@ class ExploreCourse extends Component {
             docModal: !prevState.docModal
         }));
     }
+
     openNotificationWithIcon = (type, msg) => {
         notification[type]({
             message: msg
@@ -82,10 +84,40 @@ class ExploreCourse extends Component {
         }
     }
 
+    documentClick1(filepath, courseName, chapterName, courseUser, e) {
+        const { match: { params } } = this.props;
+        let courseId = parseInt(params.courseId);
+        let boughtCourseId = [];
+
+        if (this.props.boughtCourse) {
+            this.props.boughtCourse.map(boughtcourse => {
+                return boughtCourseId.push(boughtcourse.courseId);
+            })
+        }
+        if (parseInt(this.props.userId) !== courseUser) {
+            this.setState({
+                file: filepath,
+                courseName: courseName,
+                chapterName: chapterName
+            });
+            this.toggleModal();
+        }
+        else if (!boughtCourseId.includes(courseId)) {
+            this.setState({
+                file: filepath,
+                courseName: courseName,
+                chapterName: chapterName
+            });
+            this.toggleModal()
+        }
+    }
+
     componentDidMount() {
         const { match: { params } } = this.props;
+        debugger
         this.props.action.course.getCourseByCourseID(params.courseId);
         this.props.action.chapter.getChapterByCourseId(params.courseId);
+        debugger
         if (this.props.token && this.props.userId) {
             this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
             this.props.action.cart.getCartByUser(parseInt(this.props.userId));
@@ -102,6 +134,24 @@ class ExploreCourse extends Component {
             })
         }
 
+        let chapter2 = [];
+        let chapter3 = [];
+        let chapter1 = this.props.chapter[0];
+        if (chapter1) {
+            chapter1.files.map((chp, i) => {
+                let courseName = course.coursename;
+                let chapterName = chp.chapterName;
+                let courseUser = course.userId;
+                return chapter2.push(
+                    <p className="cursor" key={i}
+                        onClick={this.documentClick1.bind(this, chp, courseName, chapterName, courseUser)}>
+                        {chp.split('-')[0]}
+                    </p>
+                )
+            })
+            chapter3=chapter2.slice(0,2)
+        }
+
         let chapters = [];
         let totalLecture = 0;
         if (this.props.chapter) {
@@ -109,8 +159,8 @@ class ExploreCourse extends Component {
                 totalLecture = totalLecture + chp.files.length;
                 return chapters.push(
                     <Collapse key={chp.id} accordion
-                        expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}>
-                        <Panel header={chp.chapterName + "  (" + chp.files.length + " Lectures)"} style={customPanelStyle} >
+                        expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />} >
+                        <Panel header={chp.chapterName + "  (" + chp.files.length + " Lectures)"} style={customPanelStyle} style={{ borderBottom: '30px' }}>
                             {chp.files.map((file, i) => {
                                 let courseName = course.coursename;
                                 let chapterName = chp.chapterName;
@@ -127,13 +177,11 @@ class ExploreCourse extends Component {
             })
         }
 
-
-
         return (
             <div>
                 <ModalDocument isOpen={this.state.docModal} toggle={this.toggleModal.bind(this)} chapterName={this.state.chapterName} courseName={this.state.courseName} file={this.state.file} />
                 <div key={course.id} className="hrelative">
-                    <div class="hover07 column" style={{ width: '100%', marginLeft: '0px', height: '520px' }}>
+                    <div className="hover07 column" style={{ width: '100%', marginLeft: '0px', height: '520px' }}>
                         <div>
                             <figure style={{ height: '50%' }}><img src={path + course.courseImage}
                                 style={{
@@ -147,21 +195,28 @@ class ExploreCourse extends Component {
                     </div>
                     <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>
                         <h1 className="col">{course.coursename}</h1>
-                        <h3 className="col" style={{marginRight:'100px'}}>{course.description}</h3>
+                        <h3 className="col" style={{ marginRight: '100px' }}>{course.description}</h3>
                     </div>
-                    <div className="courseContent">
-                        <h4><b>Course Content</b></h4>
-                        <h5 className="lect"> {totalLecture} Lectures</h5>
+                    <div>
+                        <div className="courseContent">
+                            <h4><b>Course Content</b></h4>
+                            <h5 className="lect"> {totalLecture} Lectures</h5>
+                            <h4 style={{ marginLeft: '320px' }}>Preview</h4>
+                        </div>
+                        {this.props.error_msg ?
+                            <h3>Not yet added</h3> :
+                            <Container style={{ width: "500px", marginTop: "20px", marginLeft: "100px", float: "left" }}>
+                                {chapters}
+                            </Container>
+                        }
+                        {this.props.error_msg ?
+                            <h3>Not yet added</h3> :
+                            <Container style={{ width: "500px", marginTop: "20px", marginLeft: "100px", float: "left" }}>
+                             <b>{chapter3}</b>
+                            </Container>
+                        }
                     </div>
-                    {this.props.error_msg ?
-                        <h3>Not yet added</h3> :
-                        <Container style={{ width: "500px", marginTop: "20px", marginLeft: "100px", float: "left" }}>
-                            {chapters}
-                        </Container>
-                    }
                 </div>
-
-
             </div>
 
         )

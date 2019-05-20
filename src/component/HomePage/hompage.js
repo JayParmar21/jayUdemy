@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 
 
 import { notification } from 'antd';
-//import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 
 import { Fade } from 'react-slideshow-image';
@@ -22,7 +21,6 @@ import rupe from '../../Logo/rupee.png'
 import path from '../../path'
 import "../../styling.css"
 import "../../stylesh.css"
-//import '../../slider-animation.css'
 import '../../imagesslide.css'
 
 const fadeProperties = {
@@ -37,20 +35,17 @@ class HomePage extends Component {
 
     }
     componentDidMount() {
+        this.props.action.course.getCourse();
         if (this.props.token && this.props.userId) {
             this.props.action.cart.getCartByUser(parseInt(this.props.userId))
             this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
         }
-        this.props.action.course.getCourse();
     }
     openNotificationWithIcon = (type, msg) => {
         notification[type]({
             message: msg
         });
     };
-    // autoplay = () => {
-    //     this.setState({ autoplay: !this.state.autoplay });
-    // };
     btnExplore(courseId, e) {
         this.props.history.push({
             pathname: '/exploreCourse/' + courseId
@@ -188,15 +183,6 @@ class HomePage extends Component {
             })
         }
 
-        // let sliderimg = []
-        // sliderimg = content.map((item, index) => {
-        //     return (
-        //         <div key={index} className="slider-content" 
-        //             style={{ backgroundImage: `url('${item.image}') `, height: '100%' }}>
-        //         </div>
-        //     )
-        // })
-
         return (
             <div className="hrelative">
                 <Fade {...fadeProperties} >
@@ -207,7 +193,7 @@ class HomePage extends Component {
                     </div>
                     <div className="each-fade">
                         <div className="image-container">
-                            <img src={HomeLogo2} alt="HomeLogo2"/>
+                            <img src={HomeLogo2} alt="HomeLogo2" />
                         </div>
                     </div>
                     <div className="each-fade">
@@ -217,7 +203,7 @@ class HomePage extends Component {
                     </div>
                     <div className="each-fade">
                         <div className="image-container" >
-                            <img src={HomeLogo3} alt="HomeLogo3"/>
+                            <img src={HomeLogo3} alt="HomeLogo3" />
                         </div>
                     </div>
                     <div className="each-fade">
@@ -226,7 +212,7 @@ class HomePage extends Component {
                         </div>
                     </div>
                 </Fade>
-                <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left',zIndex:9 }}>
+                <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left', zIndex: 9 }}>
                     {this.props.token ? (parseInt(this.props.Role) === 2 ? courseList : "") : courseList1}
                 </div>
             </div>
@@ -241,7 +227,7 @@ const mapStateToProps = state => {
         userId: state.auth.userId,
         getCart: state.cart.getCart,
         boughtCourse: state.cart.boughtCourse,
-        Role: state.auth.Role
+        Role: state.auth.Role   
     }
 }
 

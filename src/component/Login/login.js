@@ -5,6 +5,8 @@ import { bindActionCreators } from "redux";
 import { withRouter } from "react-router-dom";
 
 import * as loginAction from '../../action/authAction';
+import * as cartAction from '../../action/cartAction'
+import * as courseAction from '../../action/CourseAction' 
 
 import loginlogo from '../../Logo/login.png'
 
@@ -73,6 +75,11 @@ class Login extends Component {
                 fieldsErrors
             });
         }
+        this.props.action.course.getCourse();
+        if (this.props.token && this.props.userId) {
+            this.props.action.cart.getCartByUser(parseInt(this.props.userId))
+            this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
+        }
     }
 
     render() {
@@ -110,13 +117,18 @@ class Login extends Component {
 const mapStateToProps = state => {
     const { auth } = state;
     return {
+        token: state.auth.token,
+        userId: state.auth.userId,
         err_msg: auth.error_msg,
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
     action: {
+        course: bindActionCreators(courseAction, dispatch),
+        cart: bindActionCreators(cartAction, dispatch),
         auth: bindActionCreators(loginAction, dispatch)
+
     }
 })
 
