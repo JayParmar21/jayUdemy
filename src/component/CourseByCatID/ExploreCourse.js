@@ -13,7 +13,7 @@ import ModalDocument from './ModalDocument'
 import path from '../../path'
 import '../../styling.css'
 import 'antd/dist/antd.css';
-//import video from '../../Logo/video.png'
+
 const Panel = Collapse.Panel;
 
 const customPanelStyle = {
@@ -24,6 +24,9 @@ const customPanelStyle = {
     overflow: 'hidden',
     fontWeight: 'bold'
 };
+const boarder = {
+    borderBottom: '30px'
+}
 class ExploreCourse extends Component {
     constructor(props) {
         super(props);
@@ -114,10 +117,10 @@ class ExploreCourse extends Component {
 
     componentDidMount() {
         const { match: { params } } = this.props;
-        debugger
+    
         this.props.action.course.getCourseByCourseID(params.courseId);
         this.props.action.chapter.getChapterByCourseId(params.courseId);
-        debugger
+        
         if (this.props.token && this.props.userId) {
             this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
             this.props.action.cart.getCartByUser(parseInt(this.props.userId));
@@ -149,7 +152,7 @@ class ExploreCourse extends Component {
                     </p>
                 )
             })
-            chapter3=chapter2.slice(0,2)
+            chapter3 = chapter2.slice(0, 2)
         }
 
         let chapters = [];
@@ -160,7 +163,7 @@ class ExploreCourse extends Component {
                 return chapters.push(
                     <Collapse key={chp.id} accordion
                         expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />} >
-                        <Panel header={chp.chapterName + "  (" + chp.files.length + " Lectures)"} style={customPanelStyle} style={{ borderBottom: '30px' }}>
+                        <Panel header={chp.chapterName + "  (" + chp.files.length + " Lectures)"} style={{ customPanelStyle, boarder }}>
                             {chp.files.map((file, i) => {
                                 let courseName = course.coursename;
                                 let chapterName = chp.chapterName;
@@ -172,7 +175,6 @@ class ExploreCourse extends Component {
                             })}
                         </Panel>
                     </Collapse>
-
                 )
             })
         }
@@ -212,7 +214,7 @@ class ExploreCourse extends Component {
                         {this.props.error_msg ?
                             <h3>Not yet added</h3> :
                             <Container style={{ width: "500px", marginTop: "20px", marginLeft: "100px", float: "left" }}>
-                             <b>{chapter3}</b>
+                                <b>{chapter3}</b>
                             </Container>
                         }
                     </div>

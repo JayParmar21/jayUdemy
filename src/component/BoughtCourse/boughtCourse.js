@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Container,  Button, CardTitle, CardImg, CardBody, CardText, Card } from 'reactstrap';
-
+import { Container, Button, CardTitle, CardImg, CardBody, CardText, Card } from 'reactstrap';
+import {Popover} from 'antd'
 import 'antd/dist/antd.css';
 
 import path from '../../path';
+
+
 import * as cartAction from '../../action/cartAction';
+
+import video from '../../Logo/video.png'
+import chapter from '../../Logo/chapter.png'
 
 class BoughtCourse extends Component {
 
@@ -35,7 +40,18 @@ class BoughtCourse extends Component {
                 return (
                     <div key={course.id} className="abc1" style={{ height: '330px' }}>
                         <Card>
-                            <CardImg top style={{ height: "50%" }}src={path + course.courseImage} onClick={this.btnExplore.bind(this,course.courseId)} alt="Card image cap" />
+                            {/* <Popover content={
+                                <div style={{ width: '250px' }}>
+                                    <div><h4>{course.coursename}</h4></div>
+                                    <div>{course.description}</div>
+                                    <div style={{ marginTop: '10px' }}><h6><img src={video} alt="video" style={{ width: '14px', height: '14px', marginTop: '-4px', marginRight: '2px' }} />{course.lecture.split(',').length}<b style={{ marginLeft: '3px' }}>Lecture</b><img src={chapter} alt="video" style={{ width: '18px', height: '18px', marginTop: '-4px', marginLeft: '20px' }} /> {course.TotalChapter}<b style={{ marginLeft: '3px' }}>Chapter</b></h6></div>
+                                    <div style={{ marginTop: '15px' }}>
+                                        <Button outline color="info" onClick={this.btnExplore.bind(this, course.courseId)}  >Learn More</Button>    
+                                    </div>
+                                </div>
+                            } placement="right"> */}
+                                <CardImg top style={{ height: "50%" }} src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.courseId)} alt="Card image cap" />
+                            {/* </Popover> */}
                             <CardBody style={{ height: "50%" }}>
                                 <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
                                 <CardText>{course.description}</CardText>
