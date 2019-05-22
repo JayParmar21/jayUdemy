@@ -316,6 +316,10 @@
     width: 25%;
     margin-bottom:1%;
 }
+.anticon svg {
+    display: inline-block;
+    height: 18px;
+}
 .imgCard{
  height:55%;
 }

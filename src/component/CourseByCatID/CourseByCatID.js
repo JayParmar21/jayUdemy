@@ -10,12 +10,15 @@ import path from '../../path'
 import '../../styling.css'
 import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
+
 import HomeLogo from '../../Logo/hom.jpg';
 import HomeLogo2 from '../../Logo/hom2.jpg';
 import HomeLogo3 from '../../Logo/hom3.jpg';
 import HomeLogo4 from '../../Logo/hom4.jpg';
 import rupe from '../../Logo/rupee.png'
-import { notification } from 'antd';
+import video from '../../Logo/video.png'
+import chapter from '../../Logo/chapter.png'
+import { notification, Popover, Rate } from 'antd';
 
 const content = [
     { image: HomeLogo },
@@ -122,24 +125,43 @@ class CourseByCID extends Component {
         }
         let courselength = course.description.length.toString();
         if (courselength > 20) {
-            course.description = course.description.substring(0, 19) + "......"
+            course.description1 = course.description.substring(0, 19) + "......"
+        }
+        if (parseInt(course.ratings) === 0) {
+            course.ratings = 3
         }
         return (
             <div key={course.id} className="abc1" style={{ height: '330px' }}>
                 <Card>
-                    <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
+                    <Popover content={
+                        <div style={{ width: '250px' }}>
+                            <div><h4>{course.coursename}</h4></div>
+                            <div>{course.description}</div>
+                            <div style={{ marginTop: '10px' }}><h6><img src={video} alt="video" style={{ width: '14px', height: '14px', marginTop: '-4px', marginRight: '2px' }} />{course.lecture.split(',').length}<b style={{ marginLeft: '3px' }}>Lecture</b><img src={chapter} alt="video" style={{ width: '18px', height: '18px', marginTop: '-4px', marginLeft: '20px' }} /> {course.TotalChapter}<b style={{ marginLeft: '3px' }}>Chapter</b></h6></div>
+                            <div style={{ marginTop: '15px' }}>
+                                {bought ? "" :
+                                    ((addedToCart && loginCart) ?
+                                        <Button color="danger" onClick={this.btnAddToCart.bind(this, course.id)} >Add To Cart</Button>
+                                        : <Button color="info" onClick={this.btnGoCart.bind(this)} >Go to Cart</Button>)
+                                }
+                            </div>
+                        </div>
+                    } placement="right">
+                        <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
+                    </Popover>
                     <CardBody style={{ height: "50%" }}>
                         <CardTitle ><h2>{course.coursename}</h2></CardTitle>
-                        <CardText>{course.description}</CardText>
-                        <div>
-                            <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '17px' }} />
-                            <h5 style={{ marginTop: '-22px', marginLeft: '22px' }}>{course.rupee}</h5>
+                        <CardText>{course.description1}</CardText>
+                        <Rate allowHalf defaultValue={course.ratings} disabled />
+                        <div style={{ marginLeft: '140px' }}>
+                            <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-45px' }} />
+                            <h5 style={{ marginTop: '-45px', marginLeft: '22px' }}>{course.rupee}</h5>
                         </div>
-                        {bought ? "" :
+                        {/* {bought ? "" :
                             ((addedToCart && loginCart) ?
                                 <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Add To Cart</Button>
                                 : <Button outline onClick={this.btnGoCart.bind(this)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Go to Cart</Button>)
-                        }
+                        } */}
                     </CardBody>
                 </Card>
 
@@ -148,14 +170,14 @@ class CourseByCID extends Component {
     }
 
     render() {
-        
+
         let courseList = [];
         if (this.props.courses) {
             courseList = this.props.courses.map(course => {
 
                 let courselength = course.description.length.toString();
                 if (courselength > 20) {
-                    course.description = course.description.substring(0, 19) + "......"
+                    course.description1 = course.description.substring(0, 19) + "......"
                 }
                 return (
                     <div key={course.id} className="abc1" style={{ height: '330px' }}>
@@ -163,7 +185,7 @@ class CourseByCID extends Component {
                             <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
                             <CardBody style={{ height: "50%" }}>
                                 <CardTitle ><h2>{course.coursename}</h2></CardTitle>
-                                <CardText>{course.description}</CardText>
+                                <CardText>{course.description1}</CardText>
                                 <Button outline color="info" onClick={this.btnAddChapter.bind(this, course.id)}>Add Chapter</Button>
                                 <Button outline color="danger" style={{ marginLeft: '35px' }} onClick={this.btnEdit.bind(this, course.id)}>Edit</Button>
                             </CardBody>
@@ -181,24 +203,39 @@ class CourseByCID extends Component {
         }
         let courseList2 = []
         if (this.props.courses) {
-
+            let description1;
             courseList2 = this.props.courses.map(course => {
                 let courselength = course.description.length.toString();
                 if (courselength > 20) {
-                    course.description = course.description.substring(0, 19) + "......"
+                    description1 = course.description.substring(0, 19) + "......"
+                }
+                if (parseInt(course.ratings) === 0) {
+                    course.ratings = 3
                 }
                 return (
                     <div key={course.id} className="abc1" style={{ height: '330px' }}>
                         <Card>
-                            <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
+                            <Popover content={
+                                <div style={{ width: '250px' }}>
+                                    <div><h4>{course.coursename}</h4></div>
+                                    <div>{course.description}</div>
+                                    <div style={{ marginTop: '10px' }}><h6><img src={video} alt="video" style={{ width: '14px', height: '14px', marginTop: '-4px', marginRight: '2px' }} />{course.lecture.split(',').length}<b style={{ marginLeft: '3px' }}>Lecture</b><img src={chapter} alt="video" style={{ width: '18px', height: '18px', marginTop: '-4px', marginLeft: '20px' }} /> {course.TotalChapter}<b style={{ marginLeft: '3px' }}>Chapter</b></h6></div>
+                                    <div style={{ marginTop: '15px' }}>
+                                        <Button color="danger" onClick={this.btnAddToCart.bind(this, course.id)}>Add To Cart</Button>
+                                    </div>
+                                </div>
+                            } placement="right">
+                                <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
+                            </Popover>
                             <CardBody style={{ height: "50%" }}>
                                 <CardTitle ><h2>{course.coursename}</h2></CardTitle>
-                                <CardText>{course.description}</CardText>
-                                <div>
-                                    <img src={rupe} alt="category" style={{ marginTop: '17px' }} className="rupesIcon" />
-                                    <h5 style={{ marginTop: '-22px', marginLeft: '22px' }}>{course.rupee}</h5>
+                                <CardText>{description1}</CardText>
+                                <Rate allowHalf defaultValue={course.ratings} disabled />
+                                <div style={{ marginLeft: '140px' }}>
+                                    <img src={rupe} alt="category" style={{ marginTop: '-45px' }} className="rupesIcon" />
+                                    <h5 style={{ marginTop: '-45px', marginLeft: '22px' }}>{course.rupee}</h5>
                                 </div>
-                                <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button>
+                                {/* <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button> */}
                             </CardBody>
                         </Card>
                     </div>

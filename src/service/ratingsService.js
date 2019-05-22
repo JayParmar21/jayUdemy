@@ -7,3 +7,7 @@ export function addRatings(rate) {
 export function getRatings(userId) {
     return BaseService.get('/rate/ratings/' + userId)
 }
+export function getAllRate() {
+    debugger
+    return BaseService.get('/rate/allrate')
+}

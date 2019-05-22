@@ -48,6 +48,7 @@ class Header extends Component {
         this.props.action.category.getCategory();
     }
     onSelect(cid, e) {
+        e.preventDefault();
         this.props.action.category.getCourseByCID(cid);
         this.props.history.push('/courseCID');
     }
