@@ -47,11 +47,9 @@ export const getRatings = (userId) => {
 };
 
 export const getAllRate = () => {
-    debugger
     return (dispatch) => {
         ratingsService.getAllRate()
             .then((response) => {
-                debugger
                 if (response.status === 200) {
                     dispatch({
                         type: GET_ALL_RATE,

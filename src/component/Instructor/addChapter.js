@@ -75,7 +75,6 @@ class AddChapter extends Component {
     }
 
     btnCreateChapter(e) {
-        debugger
         e.preventDefault();
         const { match: { params } } = this.props;
         let fieldsError = { chapterName: "", files: "" };

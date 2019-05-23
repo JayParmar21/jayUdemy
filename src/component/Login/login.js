@@ -70,6 +70,7 @@ class Login extends Component {
         }
         if (!fieldsErrors.email && !fieldsErrors.password) {
             this.props.action.auth.loginUser(this.state);
+            
         } else {
             this.setState({
                 fieldsErrors

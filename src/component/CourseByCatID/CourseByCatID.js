@@ -6,6 +6,9 @@ import { bindActionCreators } from "redux";
 
 import * as courseAction from "../../action/CourseAction"
 import * as cartAction from '../../action/cartAction'
+import * as ratingAction from '../../action/ratingAction'
+import * as catAction from '../../action/categoryAction'
+
 import path from '../../path'
 import '../../styling.css'
 import Slider from 'react-animated-slider';
@@ -29,11 +32,25 @@ const content = [
 class CourseByCID extends Component {
 
     componentDidMount() {
+        // this.props.action.course.getCourse();
+        // this.props.action.category.getCourseByCID(this.props.match.params.cid);
+        // this.props.action.category.getCourseByCID(this.props.match.params.cid);
         this.props.action.course.getCourse();
+        this.props.action.category.getCourseByCID(this.props.match.params.cid);
+        this.props.action.rate.getAllRate();
         if (this.props.token && this.props.userId) {
             this.props.action.cart.getCartByUser(parseInt(this.props.userId))
             this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
         }
+
+    }
+    componentDidUpdate() {
+        this.props.action.category.getCourseByCID(this.props.match.params.cid);
+    }
+    componentWillMount() {
+        // this.props.action.course.getCourse();
+        // this.props.action.category.getCourseByCID(this.props.match.params.cid);
+        // this.props.action.rate.getAllRate();
     }
     btnAddChapter(courseId, e) {
         e.preventDefault();
@@ -130,6 +147,13 @@ class CourseByCID extends Component {
         if (parseInt(course.ratings) === 0) {
             course.ratings = 3
         }
+        let j = 0
+        this.props.rating.map(rate => {
+            if (rate.courseId === course.courseId) {
+                j = j + 1
+            }
+            return j
+        })
         return (
             <div key={course.id} className="abc1" style={{ height: '330px' }}>
                 <Card>
@@ -151,11 +175,14 @@ class CourseByCID extends Component {
                     </Popover>
                     <CardBody style={{ height: "50%" }}>
                         <CardTitle ><h2>{course.coursename}</h2></CardTitle>
-                        <CardText>{course.description1}</CardText>
-                        <Rate allowHalf defaultValue={course.ratings} disabled />
-                        <div style={{ marginLeft: '140px' }}>
-                            <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-45px' }} />
-                            <h5 style={{ marginTop: '-45px', marginLeft: '22px' }}>{course.rupee}</h5>
+                        <CardText style={{ marginBottom: '-1px' }}><p style={{ marginBottom: '-1px' }}>{course.description1}</p></CardText>
+                        <div>
+                            <Rate allowHalf defaultValue={course.ratings} disabled className="anticon" />
+                            (<b style={{ fontSize: '16px', fontFamily: 'serif' }}>{j}</b>)
+                        </div>
+                        <div style={{ marginLeft: '140px', marginTop: '16px' }}>
+                            <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-18px' }} />
+                            <h5 style={{ marginTop: '-32px', marginLeft: '20px' }}>{course.rupee}</h5>
                         </div>
                         {/* {bought ? "" :
                             ((addedToCart && loginCart) ?
@@ -212,6 +239,13 @@ class CourseByCID extends Component {
                 if (parseInt(course.ratings) === 0) {
                     course.ratings = 3
                 }
+                let j = 0
+                this.props.rating.map(rate => {
+                    if (rate.courseId === course.courseId) {
+                        j = j + 1
+                    }
+                    return j
+                })
                 return (
                     <div key={course.id} className="abc1" style={{ height: '330px' }}>
                         <Card>
@@ -229,11 +263,14 @@ class CourseByCID extends Component {
                             </Popover>
                             <CardBody style={{ height: "50%" }}>
                                 <CardTitle ><h2>{course.coursename}</h2></CardTitle>
-                                <CardText>{description1}</CardText>
-                                <Rate allowHalf defaultValue={course.ratings} disabled />
-                                <div style={{ marginLeft: '140px' }}>
-                                    <img src={rupe} alt="category" style={{ marginTop: '-45px' }} className="rupesIcon" />
-                                    <h5 style={{ marginTop: '-45px', marginLeft: '22px' }}>{course.rupee}</h5>
+                                <CardText style={{ marginBottom: '-1px' }}><p style={{ marginBottom: '-1px' }}>{description1}</p></CardText>
+                                <div>
+                                    <Rate allowHalf defaultValue={course.ratings} disabled />
+                                    (<b style={{ fontSize: '16px', fontFamily: 'serif' }}>{j}</b>)
+                                </div>
+                                <div style={{ marginLeft: '140px', marginTop: '16px' }}>
+                                    <img src={rupe} alt="category" style={{ marginTop: '-18px' }} className="rupesIcon" />
+                                    <h5 style={{ marginTop: '-32px', marginLeft: '20px' }}>{course.rupee}</h5>
                                 </div>
                                 {/* <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button> */}
                             </CardBody>
@@ -272,6 +309,7 @@ const mapStateToProps = state => {
     return {
         error_msg: state.category.error_msg,
         courses: state.category.courses,
+        rating: state.ratings.rate,
         Role: state.auth.Role,
         token: state.auth.token,
         userId: state.auth.userId,
@@ -283,6 +321,8 @@ const mapDispatchToProps = (dispatch) => ({
     action: {
         course: bindActionCreators(courseAction, dispatch),
         cart: bindActionCreators(cartAction, dispatch),
+        rate: bindActionCreators(ratingAction, dispatch),
+        category: bindActionCreators(catAction, dispatch),
     }
 })
 

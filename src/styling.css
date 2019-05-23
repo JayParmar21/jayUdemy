@@ -378,10 +378,16 @@ figure:hover+span {
     background-color: burlywood;
 }
 .rupesIcon {
-    height: 18px;
-    width: 18px;
+    height: 16px;
+    width: 16px;
 }
 .loginlogo{
     height: 70px;
     width: 70px;
 }
+
+p {
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+

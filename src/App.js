@@ -26,7 +26,7 @@ class App extends Component {
           <CRoute path="/addCourse/:courseId?" exact component={AddCourse} />
           <CRoute path="/addChapter/:courseId" exact component={AddChapter} />
           <CRoute path="/courseList" exact component={CourseList} />
-          <CRoute path="/courseCID" exact component={CourseByCID} />
+          <CRoute path="/courseCID/:cid" exact component={CourseByCID} />
           <CRoute path="/exploreCourse/:courseId" exact component={ExploreCourse} />
           <CRoute path="/cart" exact component={Cart} />
           <CRoute path="/boughtCourse" exact component={BoughtCourse} />

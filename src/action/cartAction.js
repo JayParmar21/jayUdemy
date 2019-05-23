@@ -1,5 +1,5 @@
 import * as cartService from '../service/cartService';
-import { FAILED, ADD_TO_CART, GET_CART_BY_USER, DELETE_FROM_CART, BUY_COURSE, GET_BOUGHT_COURSE_BY_USER,GET_BUY_ALL_USER } from '../Reducer/cartReducer';
+import { FAILED, ADD_TO_CART, GET_CART_BY_USER, DELETE_FROM_CART, BUY_COURSE, GET_BOUGHT_COURSE_BY_USER, GET_BUY_ALL_USER } from '../Reducer/cartReducer';
 
 export const addToCart = (data) => {
     return (dispatch) => {
@@ -25,8 +25,10 @@ export const addToCart = (data) => {
 
 export const getCartByUser = (userId) => {
     return (dispatch) => {
+        debugger
         cartService.getCartByUser(userId)
             .then((response) => {
+                debugger
                 if (response.status === 200) {
                     dispatch({
                         type: GET_CART_BY_USER,
@@ -35,10 +37,11 @@ export const getCartByUser = (userId) => {
                 }
             })
             .catch((error) => {
+                debugger
                 if (error) {
                     dispatch({
                         type: FAILED,
-                        data: { error_msg: "" }
+                        data: { error_msg: error.response.data.message }
                     });
                 }
             });
@@ -126,7 +129,7 @@ export const getBoughtCourseByUser = (userId) => {
                 if (error) {
                     dispatch({
                         type: FAILED,
-                        data: { error_msg: "" }
+                        data: { error_msg: error.response.data.message }
                     });
                 }
             });

@@ -31,7 +31,7 @@ class Payment extends Component {
             this.props.getCart.map((cart, i) => {
                 total = total + cart.rupee
                 return carts.push(<div key={cart.id}>
-                    <div style={{ textAlign: 'center' }}><img src={path + 'thumbnail/' + cart.courseImage} style={{ width: "145px" }} alt="" /></div>
+                    {/* <div style={{ textAlign: 'center' }}><img src={path + 'thumbnail/' + cart.courseImage} style={{ width: "145px" }} alt="" /></div> */}
                     <div style={{ textAlign: 'center' }}><h4>{cart.coursename}</h4></div>
                 </div>
                 )

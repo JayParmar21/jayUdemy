@@ -13,6 +13,7 @@ import { Fade } from 'react-slideshow-image';
 import * as courseAction from "../../action/CourseAction"
 import * as cartAction from '../../action/cartAction'
 import * as ratingAction from '../../action/ratingAction'
+
 import HomeLogo from '../../Logo/hom.jpg';
 import HomeLogo2 from '../../Logo/hom2.jpg';
 import HomeLogo3 from '../../Logo/hom3.jpg';
@@ -35,16 +36,31 @@ class HomePage extends Component {
     state = {
         width: window.innerWidth,
         height: window.innerHeight - 60,
-
+        courseData: [],
+        boughtcoursedata: []
     }
     componentWillMount() {
-        this.props.action.course.getCourse();
         this.props.action.rate.getAllRate();
+        this.props.action.course.getCourse();
         if (this.props.token && this.props.userId) {
             this.props.action.cart.getCartByUser(parseInt(this.props.userId))
             this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
         }
     }
+    componentWillReceiveProps(nextProps) {
+        this.setState(
+            {
+                courseData: nextProps.course
+            }
+        )
+        console.log(nextProps)
+    }
+    // componentDidMount() {
+    //     if (this.props.token && this.props.userId) {
+    //         this.props.action.cart.getCartByUser(parseInt(this.props.userId))
+    //         this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
+    //     }
+    // }
     openNotificationWithIcon = (type, msg) => {
         notification[type]({
             message: msg
@@ -102,6 +118,7 @@ class HomePage extends Component {
     }
 
     renderMedia(course) {
+        debugger
         let addedToCart = true;
         let loginCart = true;
         let bought = false;
@@ -109,7 +126,9 @@ class HomePage extends Component {
         let userId = parseInt(this.props.userId);
 
         if (this.props.token) {
+
             if (this.props.boughtCourse && this.props.boughtCourse.length !== 0) {
+                debugger
                 this.props.boughtCourse.map(boughtcourse => {
                     return boughtCourseId.push(boughtcourse.courseId);
                 })
@@ -145,6 +164,17 @@ class HomePage extends Component {
         if (courselength > 20) {
             course.description1 = course.description.substring(0, 19) + "......"
         }
+        if (parseInt(course.ratings) === 0) {
+            course.ratings = 3
+        }
+        let j = 0
+        this.props.rating.map(rate => {
+            if (rate.courseId === course.courseId) {
+                j = j + 1
+            }
+            return j
+        })
+        debugger
         return (
             <div key={course.id} className="abc1" style={{ height: '330px' }}>
                 <Card >
@@ -166,11 +196,14 @@ class HomePage extends Component {
                     </Popover>
                     <CardBody style={{ height: "50%" }}>
                         <CardTitle ><h2>{course.coursename}</h2></CardTitle>
-                        <CardText >{course.description1}</CardText>
-                        <Rate allowHalf defaultValue={course.ratings} disabled />
-                        <div style={{ marginLeft: '140px' }}>
-                            <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-45px' }} />
-                            <h5 style={{ marginTop: '-45px', marginLeft: '22px' }}>{course.rupee}</h5>
+                        <CardText style={{ marginBottom: '-1px' }}>{course.description1}</CardText>
+                        <div>
+                            <Rate allowHalf defaultValue={course.ratings} disabled className="anticon" />
+                            (<b style={{ fontSize: '16px', fontFamily: 'serif' }}>{j}</b>)
+                        </div>
+                        <div style={{ marginLeft: '140px', marginTop: '16px' }}>
+                            <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-18px' }} />
+                            <h5 style={{ marginTop: '-32px', marginLeft: '20px' }}>{course.rupee}</h5>
                         </div>
                         {/* {bought ? "" :
                             ((addedToCart && loginCart) ?
@@ -183,7 +216,6 @@ class HomePage extends Component {
         )
     }
     renderMedia1(course) {
-        
         let courselength = course.description.length.toString();
         if (courselength > 20) {
             course.description1 = course.description.substring(0, 19) + "......"
@@ -191,13 +223,12 @@ class HomePage extends Component {
         if (parseInt(course.ratings) === 0) {
             course.ratings = 3
         }
-        let j=0
+        let j = 0
         this.props.rating.map(rate => {
-           if(rate.courseId===course.courseId)
-           {
-                j=j+1
-           }
-           return j
+            if (rate.courseId === course.courseId) {
+                j = j + 1
+            }
+            return j
         })
 
         return (
@@ -217,11 +248,14 @@ class HomePage extends Component {
                     </Popover>
                     <CardBody style={{ height: "50%" }}>
                         <CardTitle ><h2>{course.coursename}</h2></CardTitle>
-                        <CardText >{course.description1}</CardText>
-                        <Rate allowHalf defaultValue={course.ratings} disabled className="anticon" />
-                        <div style={{ marginLeft: '140px' }}>
+                        <CardText style={{ marginBottom: '-1px' }}>{course.description1}</CardText>
+                        <div>
+                            <Rate allowHalf defaultValue={course.ratings} disabled className="anticon" />
+                            (<b style={{ fontSize: '16px', fontFamily: 'serif' }}>{j}</b>)
+                        </div>
+                        <div style={{ marginLeft: '140px', marginTop: '16px' }}>
                             <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-18px' }} />
-                            <h5 style={{ marginTop: '-32px', marginLeft: '20px' }}>{course.rupee}</h5>
+                            <h5 style={{ marginTop: '-32px', marginLeft: '18px' }}>{course.rupee}</h5>
                         </div>
                         {/* <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button> */}
                     </CardBody>
@@ -238,8 +272,8 @@ class HomePage extends Component {
         }
 
         let courseList = [];
-        if (this.props.course) {
-            this.props.course.map(course => {
+        if (this.state.courseData) {
+            this.state.courseData.map(course => {
                 return courseList.push(this.renderMedia(course))
             })
         }

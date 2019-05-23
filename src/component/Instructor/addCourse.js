@@ -194,7 +194,6 @@ class AddCourse extends Component {
     }
 
     btnAdd(e) {
-        debugger
         e.preventDefault();
         if (this.state.subcatId === 0)
             this.setState({
@@ -244,7 +243,6 @@ class AddCourse extends Component {
         // console.log(localStorage.getItem("userId"))
         // console.log(this.state.courseImage[0])
         if (this.state.formValid && this.state.catValid && this.state.subcatValid) {
-            debugger
             this.props.action.course.addCourse(formdata);
             this.props.history.push('/courseList');
         }
