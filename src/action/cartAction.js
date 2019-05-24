@@ -25,10 +25,8 @@ export const addToCart = (data) => {
 
 export const getCartByUser = (userId) => {
     return (dispatch) => {
-        debugger
         cartService.getCartByUser(userId)
             .then((response) => {
-                debugger
                 if (response.status === 200) {
                     dispatch({
                         type: GET_CART_BY_USER,
@@ -37,7 +35,6 @@ export const getCartByUser = (userId) => {
                 }
             })
             .catch((error) => {
-                debugger
                 if (error) {
                     dispatch({
                         type: FAILED,

@@ -23,6 +23,9 @@ class BoughtCourse extends Component {
         }
     }
 
+    // componentWillReceiveProps(nextprops){
+    //     console.log(nextprops)
+    // }
     ratings(courseId, value, e) {
         let data = {
             userId: parseInt(this.props.userId),
@@ -76,7 +79,7 @@ class BoughtCourse extends Component {
                     <CardBody style={{ height: "50%" }}>
                         <CardTitle style={{ marginTop: '-20px' }}><h2>{course.coursename}</h2></CardTitle>
                         <CardText>{course.description1}</CardText>
-                        <Button outline color="info" onClick={this.btnExplore.bind(this, course.courseId)}>Learn More</Button><br/>
+                        <Button outline color="info" onClick={this.btnExplore.bind(this, course.courseId)}>Learn More</Button><br />
                         <b>Rate It:-{rates}</b>
                     </CardBody>
                 </Card>

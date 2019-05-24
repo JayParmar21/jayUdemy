@@ -188,14 +188,16 @@
 }
 
 .hrelative {
-    position: relative;
+    /* position: relative; */
+    width: 94%;
 }
 
 .homediv {
-    position: absolute;
+    /* position: absolute; */
     left: 5%;
     top: 20%;
-    width: 95%;
+    width: 93%;
+    margin-left: 144px;
     text-align: center;
     display: flex !important;
     text-align: left !important;
@@ -313,7 +315,12 @@
 }
 .abc1{
     display: inline-block;
-    width: 25%;
+    width: 18%;
+    margin-bottom:1%;
+}
+.abc2{
+    display: inline-block;
+    width: 18%;
     margin-bottom:1%;
 }
 .anticon svg {
@@ -391,3 +398,39 @@ p {
     margin-bottom: 0rem;
 }
 
+.card-title {
+    margin-bottom: .75rem;
+    margin-top: -14px;
+    margin-left: -12px;
+}
+.card-body p {
+    /* margin-top: 0px; */
+    margin-bottom: 1rem;
+    margin-left: -10px;
+}
+.menu-item {
+  padding: 0 40px;
+  margin: 5px 10px;
+  user-select: none;
+  cursor: pointer;
+  border: none;
+}
+.menu-item-wrapper.active {
+  border: 1px blue solid;
+}
+.menu-item.active {
+  border: 1px green solid;
+}
+ 
+.scroll-menu-arrow {
+  padding: 20px;
+  cursor: pointer;
+}
+
+.menu-wrapper{
+    width: 1140px;
+    margin-left: 90px;
+}
+.menu-item-wrapper {
+    width:228px
+}

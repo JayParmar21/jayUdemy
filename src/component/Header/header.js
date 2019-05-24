@@ -32,7 +32,9 @@ class Header extends Component {
             dropdownOpen: false,
             ddlogoutopen: false,
             query: '',
-            result: []
+            result: [],
+            token:"",
+            userid:""
         };
 
         this.toggle = this.toggle.bind(this);
@@ -46,6 +48,13 @@ class Header extends Component {
 
     componentDidMount() {
         this.props.action.category.getCategory();
+        
+    }
+    componentDidUpdate(){
+        if (this.state.token && this.state.userid) {
+            this.props.action.cart.getCartByUser(parseInt(this.state.userid))
+            this.props.action.cart.getBoughtCourseByUser(parseInt(this.state.userid));
+        }
     }
     onSelect(cid, e) {
         e.preventDefault();
@@ -54,7 +63,12 @@ class Header extends Component {
             pathname: '/courseCID/' + cid
         });
     }
-
+    componentWillReceiveProps(nextprops) {
+        this.setState({
+            token:nextprops.token,
+            userid:nextprops.userId
+        })
+    }
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
@@ -267,11 +281,11 @@ class Header extends Component {
                         </Nav>
                     </Collapse>
                 </Navbar>
-                <Navbar style={{ backgroundImage: "linear-gradient(to right, silver , gray)" }}>
+                {/* <Navbar style={{ backgroundImage: "linear-gradient(to right, silver , gray)" }}>
                     <Nav style={{ marginLeft: "33%" }}>
                         {categories1}
                     </Nav>
-                </Navbar>
+                </Navbar> */}
             </div>
         )
     }

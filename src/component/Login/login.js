@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 
 import * as loginAction from '../../action/authAction';
 import * as cartAction from '../../action/cartAction'
-import * as courseAction from '../../action/CourseAction' 
+import * as courseAction from '../../action/CourseAction'
 
 import loginlogo from '../../Logo/login.png'
 
@@ -17,7 +17,9 @@ class Login extends Component {
             email: "",
             password: "",
             fieldsErrors: { email: '', password: '' },
-            err_msg: ""
+            err_msg: "",
+            uid: "",
+            token: ""
         }
     }
 
@@ -36,6 +38,18 @@ class Login extends Component {
         }
     }
 
+    componentWillReceiveProps(nextprpos) {
+        this.setState({
+            uid: nextprpos.userId,
+            token: nextprpos.token
+        })
+    }
+    componentDidMount() {
+        if (this.state.token && this.state.userId) {
+            this.props.action.cart.getCartByUser(parseInt(this.state.userId))
+            this.props.action.cart.getBoughtCourseByUser(parseInt(this.state.userId));
+        }
+    }
     inputChangeHandler(e) {
         this.setState({ fieldsErrors: { email: '', password: '' } })
         const name = e.target.name;
@@ -70,17 +84,18 @@ class Login extends Component {
         }
         if (!fieldsErrors.email && !fieldsErrors.password) {
             this.props.action.auth.loginUser(this.state);
-            
+
         } else {
             this.setState({
                 fieldsErrors
             });
         }
+
         this.props.action.course.getCourse();
-        if (this.props.token && this.props.userId) {
-            this.props.action.cart.getCartByUser(parseInt(this.props.userId))
-            this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
-        }
+        // if (this.props.token && this.props.userId) {
+        //     this.props.action.cart.getCartByUser(parseInt(this.props.userId))
+        //     this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
+        // }
     }
 
     render() {

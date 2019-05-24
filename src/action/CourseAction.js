@@ -28,7 +28,6 @@ export const getCourse = () => {
         courseService.getCourse()
             .then((response) => {
                 if (response.status === 200) {
-                    debugger
                     dispatch({
                         type: GET_COURSE,
                         course: response.data

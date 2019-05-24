@@ -27,12 +27,13 @@ h3 {
 
 .each-fade .image-container {
   width: 100%;
-  height: 950px;
+  height: 550px;
   /* overflow: hidden; */
 }
 
 .each-fade .image-container img {
-  width: 100%;
+  width: 80%;
+  /* height: 50%; */
 }
 
 .each-fade h2 {

@@ -7,7 +7,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Table } from 'react
 import * as cartAction from '../../action/cartAction';
 import * as courseAction from '../../action/CourseAction'
 
-import path from '../../path'
+// import path from '../../path'
 import rupe from '../../Logo/rupee.png'
 class Payment extends Component {
 

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Button, CardBody, CardText, CardTitle, Card, CardImg } from 'reactstrap'
+import { Button, CardBody, CardText, CardTitle, Card, CardImg, NavLink, Nav, Navbar } from 'reactstrap'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 
-
+import ScrollMenu from 'react-horizontal-scrolling-menu';
 import { notification, Popover, Rate } from 'antd';
 import 'react-animated-slider/build/horizontal.css';
 
@@ -13,6 +13,7 @@ import { Fade } from 'react-slideshow-image';
 import * as courseAction from "../../action/CourseAction"
 import * as cartAction from '../../action/cartAction'
 import * as ratingAction from '../../action/ratingAction'
+import * as catAction from '../../action/categoryAction'
 
 import HomeLogo from '../../Logo/hom.jpg';
 import HomeLogo2 from '../../Logo/hom2.jpg';
@@ -26,20 +27,34 @@ import path from '../../path'
 import "../../styling.css"
 import "../../stylesh.css"
 import '../../imagesslide.css'
+import "../../roll.css"
 
 const fadeProperties = {
     duration: 2000,
     transitionDuration: 4000,
     infinite: true,
+    arrows: false
 }
+
+const Arrow = ({ text, className }) => {
+    return (
+        <div
+            className={className}
+        >{text}</div>
+    );
+};
+const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
+const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
 class HomePage extends Component {
     state = {
         width: window.innerWidth,
         height: window.innerHeight - 60,
         courseData: [],
-        boughtcoursedata: []
+        boughtcoursedata: [],
     }
     componentWillMount() {
+        let id = 1
+        this.props.action.category.getCourseByCID(id);
         this.props.action.rate.getAllRate();
         this.props.action.course.getCourse();
         if (this.props.token && this.props.userId) {
@@ -50,10 +65,19 @@ class HomePage extends Component {
     componentWillReceiveProps(nextProps) {
         this.setState(
             {
-                courseData: nextProps.course
+                courseData: nextProps.course,
+
             }
         )
-        console.log(nextProps)
+    }
+    onSelect(cid, e) {
+        e.preventDefault();
+        if (cid) {
+            this.props.action.category.getCourseByCID(cid);
+        }
+        // this.props.history.push({
+        //     pathname: '/courseCID/' + cid
+        // });
     }
     // componentDidMount() {
     //     if (this.props.token && this.props.userId) {
@@ -118,7 +142,6 @@ class HomePage extends Component {
     }
 
     renderMedia(course) {
-        debugger
         let addedToCart = true;
         let loginCart = true;
         let bought = false;
@@ -128,7 +151,6 @@ class HomePage extends Component {
         if (this.props.token) {
 
             if (this.props.boughtCourse && this.props.boughtCourse.length !== 0) {
-                debugger
                 this.props.boughtCourse.map(boughtcourse => {
                     return boughtCourseId.push(boughtcourse.courseId);
                 })
@@ -174,7 +196,6 @@ class HomePage extends Component {
             }
             return j
         })
-        debugger
         return (
             <div key={course.id} className="abc1" style={{ height: '330px' }}>
                 <Card >
@@ -232,11 +253,11 @@ class HomePage extends Component {
         })
 
         return (
-            <div key={course.id} className="abc1" style={{ height: '330px' }}>
-                <Card>
+            <div key={course.id}  style={{ height: '300px' }}>
+                <Card style={{ width: '222px' }}>
                     <Popover content={
                         <div style={{ width: '250px' }}>
-                            <div><h4>{course.coursename}</h4></div>
+                            <div ><h5>{course.coursename}</h5></div>
                             <div>{course.description}</div>
                             <div style={{ marginTop: '10px' }}><h6><img src={video} alt="video" style={{ width: '14px', height: '14px', marginTop: '-4px', marginRight: '2px' }} />{course.lecture.split(',').length}<b style={{ marginLeft: '3px' }}>Lecture</b><img src={chapter} alt="video" style={{ width: '18px', height: '18px', marginTop: '-4px', marginLeft: '20px' }} /> {course.TotalChapter}<b style={{ marginLeft: '3px' }}>Chapter</b></h6></div>
                             <div style={{ marginTop: '15px' }}>
@@ -247,13 +268,13 @@ class HomePage extends Component {
                         <CardImg style={{ height: "50%" }} onClick={this.btnExplore.bind(this, course.id)} top src={path + course.courseImage} alt="Card image cap" />
                     </Popover>
                     <CardBody style={{ height: "50%" }}>
-                        <CardTitle ><h2>{course.coursename}</h2></CardTitle>
+                        <CardTitle ><h5 >{course.coursename}</h5></CardTitle>
                         <CardText style={{ marginBottom: '-1px' }}>{course.description1}</CardText>
-                        <div>
-                            <Rate allowHalf defaultValue={course.ratings} disabled className="anticon" />
-                            (<b style={{ fontSize: '16px', fontFamily: 'serif' }}>{j}</b>)
+                        <div >
+                            <Rate allowHalf defaultValue={course.ratings} disabled className="anticon" style={{ marginLeft: '-12px' }} />
+                            ({j})
                         </div>
-                        <div style={{ marginLeft: '140px', marginTop: '16px' }}>
+                        <div style={{ marginLeft: '114px', marginTop: '22px' }}>
                             <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-18px' }} />
                             <h5 style={{ marginTop: '-32px', marginLeft: '18px' }}>{course.rupee}</h5>
                         </div>
@@ -265,8 +286,8 @@ class HomePage extends Component {
     }
     render() {
         let courseList1 = [];
-        if (this.props.course) {
-            this.props.course.map(course => {
+        if (this.state.courseData) {
+            this.state.courseData.map(course => {
                 return courseList1.push(this.renderMedia1(course))
             })
         }
@@ -278,6 +299,65 @@ class HomePage extends Component {
             })
         }
 
+        let categories1 = "";
+        if (this.props.category) {
+            categories1 = this.props.category.map(cat => {
+                return <NavLink key={cat.id} onClick={this.onSelect.bind(this, cat.id)}>{cat.name}</NavLink>
+
+            })
+        }
+
+        let courseList2 = []
+        if (this.props.courses) {
+            let description1;
+            courseList2 = this.props.courses.map(course => {
+                let courselength = course.description.length.toString();
+                if (courselength > 20) {
+                    description1 = course.description.substring(0, 19) + "......"
+                }
+                if (parseInt(course.ratings) === 0) {
+                    course.ratings = 3
+                }
+                let j = 0
+                this.props.rating.map(rate => {
+                    if (rate.courseId === course.courseId) {
+                        j = j + 1
+                    }
+                    return j
+                })
+                return (
+                    <div key={course.id} className="abc1" style={{ height: '300px' }}>
+                        <Card style={{ width: '222px' }}>
+                            <Popover content={
+                                <div style={{ width: '250px' }}>
+                                    <div ><h5 >{course.coursename}</h5></div>
+                                    <div>{course.description}</div>
+                                    <div style={{ marginTop: '10px' }}><h6><img src={video} alt="video" style={{ width: '14px', height: '14px', marginTop: '-4px', marginRight: '2px' }} />{course.lecture.split(',').length}<b style={{ marginLeft: '3px' }}>Lecture</b><img src={chapter} alt="video" style={{ width: '18px', height: '18px', marginTop: '-4px', marginLeft: '20px' }} /> {course.TotalChapter}<b style={{ marginLeft: '3px' }}>Chapter</b></h6></div>
+                                    <div style={{ marginTop: '15px' }}>
+                                        <Button color="danger" onClick={this.btnAddToCart.bind(this, course.id)}>Add To Cart</Button>
+                                    </div>
+                                </div>
+                            } placement="right">
+                                <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
+                            </Popover>
+                            <CardBody style={{ height: "50%" }}>
+                                <CardTitle ><h5>{course.coursename}</h5></CardTitle>
+                                <CardText style={{ marginBottom: '-1px' }}>{description1}</CardText>
+                                <div>
+                                    <Rate allowHalf defaultValue={course.ratings} disabled style={{ marginLeft: '-12px' }} />
+                                    ({j})
+                                </div>
+                                <div style={{ marginLeft: '114px', marginTop: '22px' }}>
+                                    <img src={rupe} alt="category" style={{ marginTop: '-18px' }} className="rupesIcon" />
+                                    <h5 style={{ marginTop: '-32px', marginLeft: '18px' }}>{course.rupee}</h5>
+                                </div>
+                                {/* <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button> */}
+                            </CardBody>
+                        </Card>
+                    </div>
+                )
+            })
+        }
         return (
             <div className="hrelative">
                 <Fade {...fadeProperties} >
@@ -307,8 +387,24 @@ class HomePage extends Component {
                         </div>
                     </div>
                 </Fade>
+                <Navbar >
+                    <Nav style={{ marginLeft: "9%" }}>
+                        {categories1}
+                    </Nav>
+                </Navbar>
                 <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left', zIndex: 9 }}>
-                    {this.props.token ? (parseInt(this.props.Role) === 2 ? courseList : "") : courseList1}
+                    {courseList2}
+                </div>
+                <div  >
+                    <div >
+                        <ScrollMenu style={{ display: 'block', width: '80%', textAlign: 'left', zIndex: 9,marginLeft:'15px' }}
+                            // {this.props.token ? (parseInt(this.props.Role) === 2 ? courseList : "") : courseList1}
+                            data={courseList1}
+                            arrowLeft={ArrowLeft}
+                            arrowRight={ArrowRight}
+                            
+                             />
+                    </div>
                 </div>
             </div>
         );
@@ -317,9 +413,11 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
     return {
+        category: state.category.category,
         token: state.auth.token,
         rating: state.ratings.rate,
         course: state.course.course,
+        courses: state.category.courses,
         getcourse: state.course.getCourseByCid,
         userId: state.auth.userId,
         getCart: state.cart.getCart,
@@ -330,6 +428,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
     action: {
+        category: bindActionCreators(catAction, dispatch),
         course: bindActionCreators(courseAction, dispatch),
         cart: bindActionCreators(cartAction, dispatch),
         rate: bindActionCreators(ratingAction, dispatch),

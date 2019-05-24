@@ -21,7 +21,6 @@ export default (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, { course: state.course.concat(action.add_course) });
         }
         case GET_COURSE: {
-            debugger
             return Object.assign({}, state, { course: action.course, error_msg: ""});
             // return Object.assign({}, state), {
             //     ...state,
