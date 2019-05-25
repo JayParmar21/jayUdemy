@@ -1,5 +1,5 @@
 .slide-container {
-  width: 70%;
+  /* width: 70%; */
   margin: auto; }
 
 h3 {
@@ -32,7 +32,7 @@ h3 {
 }
 
 .each-fade .image-container img {
-  width: 80%;
+  /* width: 80%; */
   /* height: 50%; */
 }
 

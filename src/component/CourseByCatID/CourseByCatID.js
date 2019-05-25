@@ -291,9 +291,9 @@ class CourseByCID extends Component {
         return (
 
             <div className="hrelative">
-                <Slider className="slider-wrapper" >
+                {/* <Slider className="slider-wrapper" >
                     {sliderimg}
-                </Slider>
+                </Slider> */}
 
                 <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>
                     {this.props.token ? (parseInt(this.props.Role) === 1 ? courseList : courseList1) : courseList2}

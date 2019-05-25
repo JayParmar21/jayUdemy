@@ -7,6 +7,8 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import "../node_modules/video-react/dist/video-react.css";
 // import '../node_modules/react-modal-video/scss/modal-video.scss';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import store from './store'
 

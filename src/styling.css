@@ -189,15 +189,16 @@
 
 .hrelative {
     /* position: relative; */
-    width: 94%;
+    /* width: 94%; */
+    overflow-x: hidden;
 }
 
 .homediv {
     /* position: absolute; */
-    left: 5%;
+    /* left: 5%;
     top: 20%;
     width: 93%;
-    margin-left: 144px;
+    margin-left: 133px; */
     text-align: center;
     display: flex !important;
     text-align: left !important;
@@ -315,9 +316,23 @@
 }
 .abc1{
     display: inline-block;
-    width: 18%;
+    /* width: 18%; */
     margin-bottom:1%;
+    height: 300px!important;
 }
+
+.abc3 .slick-slider{
+    height: 300px !important;
+    width:100%;
+}
+.abc3 .slick-track {
+    margin-left: 0 !important;
+}
+ .abc3 .slick-slide {
+    /* width: 230px !important; */
+}   
+    /* margin-left: auto; */
+
 .abc2{
     display: inline-block;
     width: 18%;
@@ -429,8 +444,38 @@ p {
 
 .menu-wrapper{
     width: 1140px;
-    margin-left: 90px;
+    /* margin-left: 90px; */
 }
 .menu-item-wrapper {
     width:228px
+}
+.horizontal-menu{
+    display: flex;
+    align-items: center;
+    user-select: none;
+    margin-left: 81px;
+}
+/* .container{
+    background:white;
+    border-radius:5px;
+  box-shadow: 10px 10px 50px #263238;
+  padding:15%;
+} */
+
+
+.arrow::before{
+    opacity: 1 !important;
+    font-size: 30px !important;
+    line-height: 0 !important;
+}
+
+
+.carImag:hover{
+    cursor: pointer;
+}
+.overtexture{
+    font-family: open sans,helvetica neue,Helvetica,Arial,sans-serif ;
+    margin: -320px 460px;
+    color:whitesmoke;
+    text-align: initial;
 }

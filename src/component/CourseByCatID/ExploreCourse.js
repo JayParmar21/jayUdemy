@@ -14,6 +14,8 @@ import path from '../../path'
 import '../../styling.css'
 import 'antd/dist/antd.css';
 
+import grey from '../../Logo/grey.jpg'
+
 const Panel = Collapse.Panel;
 
 const customPanelStyle = {
@@ -117,10 +119,10 @@ class ExploreCourse extends Component {
 
     componentDidMount() {
         const { match: { params } } = this.props;
-    
+
         this.props.action.course.getCourseByCourseID(params.courseId);
         this.props.action.chapter.getChapterByCourseId(params.courseId);
-        
+
         if (this.props.token && this.props.userId) {
             this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
             this.props.action.cart.getCartByUser(parseInt(this.props.userId));
@@ -182,10 +184,10 @@ class ExploreCourse extends Component {
         return (
             <div>
                 <ModalDocument isOpen={this.state.docModal} toggle={this.toggleModal.bind(this)} chapterName={this.state.chapterName} courseName={this.state.courseName} file={this.state.file} />
-                <div key={course.id} className="hrelative">
-                    <div className="hover07 column" style={{ width: '100%', marginLeft: '0px', height: '520px' }}>
+                <div>
+                    <div style={{ width: '100%', marginLeft: '0px', height: '520px' }}>
                         <div>
-                            <figure style={{ height: '50%' }}><img src={path + course.courseImage}
+                            <figure style={{ height: '50%' }}><img src={grey}
                                 style={{
                                     display: 'block',
                                     width: '100%', height: '520px',
@@ -193,32 +195,37 @@ class ExploreCourse extends Component {
                                 }}
                                 alt="Home"></img>
                             </figure>
+                            <div className="overtexture">
+                                <p style={{fontSize:'36px'}}>{course.coursename}</p>
+                                <p style={{ fontSize: '21px', fontFamily:'open sans,helvetica neue,Helvetica,Arial,sans-serif'}}>{course.description}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>
-                        <h1 className="col">{course.coursename}</h1>
-                        <h3 className="col" style={{ marginRight: '100px' }}>{course.description}</h3>
                     </div>
                     <div>
-                        <div className="courseContent">
-                            <h4><b>Course Content</b></h4>
-                            <h5 className="lect"> {totalLecture} Lectures</h5>
-                            <h4 style={{ marginLeft: '320px' }}>Preview</h4>
-                        </div>
-                        {this.props.error_msg ?
-                            <h3>Not yet added</h3> :
-                            <Container style={{ width: "500px", marginTop: "20px", marginLeft: "100px", float: "left" }}>
-                                {chapters}
-                            </Container>
-                        }
-                        {this.props.error_msg ?
-                            <h3>Not yet added</h3> :
-                            <Container style={{ width: "500px", marginTop: "20px", marginLeft: "100px", float: "left" }}>
-                                <b>{chapter3}</b>
-                            </Container>
-                        }
+                        {/* <p >{course.coursename}</p>
+                        <p >{course.description}</p> */}
                     </div>
                 </div>
+                <div>
+                    <div className="courseContent">
+                        <h4><b>Course Content</b></h4>
+                        <h5 className="lect"> {totalLecture} Lectures</h5>
+                        <h4 style={{ marginLeft: '320px' }}>Preview</h4>
+                    </div>
+                    {this.props.error_msg ?
+                        <h3>Not yet added</h3> :
+                        <Container style={{ width: "500px", marginTop: "20px", marginLeft: "100px", float: "left" }}>
+                            {chapters}
+                        </Container>
+                    }
+                    {this.props.error_msg ?
+                        <h3>Not yet added</h3> :
+                        <Container style={{ width: "500px", marginTop: "20px", marginLeft: "100px", float: "left" }}>
+                            <b>{chapter3}</b>
+                        </Container>
+                    }
+                </div>
+
             </div>
 
         )
