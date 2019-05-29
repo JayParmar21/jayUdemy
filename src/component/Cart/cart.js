@@ -10,6 +10,7 @@ import * as courseAction from '../../action/CourseAction';
 import Payment from '../payment/payment'
 
 import rupe from '../../Logo/rupee.png'
+import ulogo from '../../Logo/udemylogo.png'
 
 import path from '../../path';
 import 'antd/dist/antd.css';
@@ -194,6 +195,13 @@ class Cart extends Component {
                             : null}
                     </div>
                 </Container>
+                <div style={{ textAlign: 'initial', marginTop: '313px' }}>
+                    <div style={{ color: '#686f7a', borderTop: '1px solid lightgray' }}>
+                        <img src={ulogo} alt="ulogo" style={{ height: '70px', width: '120px', margin: ' 0 31.5% 0 0' }}></img>
+                        Copyright © 2019 Udemy, Inc</div>
+                </div>
+                <div className="shadecolor1">
+                </div>
             </div>
         )
     }

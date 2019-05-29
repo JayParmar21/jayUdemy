@@ -4,11 +4,9 @@ import { Button, CardBody, CardText, CardTitle, Card, CardImg, NavLink, Nav, Nav
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 
-import ScrollMenu from 'react-horizontal-scrolling-menu';
 import { notification, Popover, Rate } from 'antd';
 import 'react-animated-slider/build/horizontal.css';
 
-import { Fade } from 'react-slideshow-image';
 import Slider from "react-slick";
 
 import * as courseAction from "../../action/CourseAction"
@@ -24,18 +22,14 @@ import HomeLogo5 from '../../Logo/hom5.jpg';
 import video from '../../Logo/video.png'
 import chapter from '../../Logo/chapter.png'
 import rupe from '../../Logo/rupee.png'
+import ulogo from '../../Logo/udemylogo.png'
+
 import path from '../../path'
 import "../../styling.css"
 import "../../stylesh.css"
 import '../../imagesslide.css'
 import "../../roll.css"
 
-const fadeProperties = {
-    duration: 2000,
-    transitionDuration: 4000,
-    infinite: true,
-    arrows: false
-}
 const settings = {
     dots: false,
     infinite: true,
@@ -66,13 +60,6 @@ const settings2 = {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />
 };
-const Arrow = ({ text, className }) => {
-    return (
-        <div
-            className={className}
-        >{text}</div>
-    );
-};
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -94,8 +81,7 @@ function SamplePrevArrow(props) {
         />
     );
 }
-const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
-const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
+
 class HomePage extends Component {
     state = {
         width: window.innerWidth,
@@ -128,16 +114,7 @@ class HomePage extends Component {
             this.props.action.category.getCourseByCID(cid);
         }
         this.setState({ index: parseInt(index) })
-        // this.props.history.push({
-        //     pathname: '/courseCID/' + cid
-        // });
     }
-    // componentDidMount() {
-    //     if (this.props.token && this.props.userId) {
-    //         this.props.action.cart.getCartByUser(parseInt(this.props.userId))
-    //         this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
-    //     }
-    // }
     openNotificationWithIcon = (type, msg) => {
         notification[type]({
             message: msg
@@ -148,11 +125,9 @@ class HomePage extends Component {
             pathname: '/exploreCourse/' + courseId
         })
     }
-
     btnGoCart(e) {
         this.props.history.push('/cart');
     }
-
     btnAddToCart(courseId, e) {
         if (!this.props.token && this.props.Role === "") {
             this.openNotificationWithIcon('info', "Please Login First");
@@ -193,7 +168,6 @@ class HomePage extends Component {
             </div>
         )
     }
-
     renderMedia(course) {
         let addedToCart = true;
         let loginCart = true;
@@ -202,7 +176,6 @@ class HomePage extends Component {
         let userId = parseInt(this.props.userId);
 
         if (this.props.token) {
-
             if (this.props.boughtCourse && this.props.boughtCourse.length !== 0) {
                 this.props.boughtCourse.map(boughtcourse => {
                     return boughtCourseId.push(boughtcourse.courseId);
@@ -279,11 +252,6 @@ class HomePage extends Component {
                             <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-18px', marginLeft: '3px' }} />
                             <h5 style={{ marginTop: '-22px', marginLeft: '18px' }}>{course.rupee}</h5>
                         </div>
-                        {/* {bought ? "" :
-                            ((addedToCart && loginCart) ?
-                                <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Add To Cart</Button>
-                                : <Button outline onClick={this.btnGoCart.bind(this)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Go to Cart</Button>)
-                        } */}
                     </CardBody>
                 </Card>
             </div>
@@ -331,7 +299,6 @@ class HomePage extends Component {
                             <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-18px' }} />
                             <h5 style={{ marginTop: '-32px', marginLeft: '18px' }}>{course.rupee}</h5>
                         </div>
-                        {/* <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button> */}
                     </CardBody>
                 </Card>
             </div>
@@ -370,13 +337,15 @@ class HomePage extends Component {
                 let bought = false;
                 let boughtCourseId = [];
                 let userId = parseInt(this.props.userId);
+
                 if (this.props.token) {
+
                     if (this.props.boughtCourse && this.props.boughtCourse.length !== 0) {
                         this.props.boughtCourse.map(boughtcourse => {
                             return boughtCourseId.push(boughtcourse.courseId);
                         })
                     }
-                    if (userId === parseInt(this.props.boughtCourse.userId)) {
+                    if (userId === course.userId) {
                         bought = true;
                     }
                     else if (boughtCourseId.includes(course.id)) {
@@ -427,7 +396,11 @@ class HomePage extends Component {
                                     <div>{course.description}</div>
                                     <div style={{ marginTop: '10px' }}><h6><img src={video} alt="video" style={{ width: '14px', height: '14px', marginTop: '-4px', marginRight: '2px' }} />{course.lecture.split(',').length}<b style={{ marginLeft: '3px' }}>Lecture</b><img src={chapter} alt="video" style={{ width: '18px', height: '18px', marginTop: '-4px', marginLeft: '20px' }} /> {course.TotalChapter}<b style={{ marginLeft: '3px' }}>Chapter</b></h6></div>
                                     <div style={{ marginTop: '15px' }}>
-                                        <Button color="danger" onClick={this.btnAddToCart.bind(this, course.id)}>Add To Cart</Button>
+                                        {bought ? "" :
+                                            ((addedToCart && loginCart) ?
+                                                <Button color="danger" onClick={this.btnAddToCart.bind(this, course.id)} >Add To Cart</Button>
+                                                : <Button color="info" onClick={this.btnGoCart.bind(this)} >Go to Cart</Button>)
+                                        }
                                     </div>
                                 </div>
                             } placement="right">
@@ -444,7 +417,6 @@ class HomePage extends Component {
                                     <img src={rupe} alt="category" style={{ marginTop: '-18px' }} className="rupesIcon" />
                                     <h5 style={{ marginTop: '-22px', marginLeft: '18px' }}>{course.rupee}</h5>
                                 </div>
-                                {/* <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button> */}
                             </CardBody>
                         </Card>
                     </div>
@@ -455,48 +427,21 @@ class HomePage extends Component {
             <div className="hrelative">
                 <Slider {...settings}>
                     <div style={{ width: '100%', height: '300px' }}>
-                        <img src={HomeLogo} alt="homelogo" style={{ width: '100%', height: '600px' }} />
+                        <img src={HomeLogo} alt="homelogo" style={{ width: '100%', height: '650px' }} />
                     </div>
                     <div style={{ width: '100%', height: '300px' }}>
-                        <img src={HomeLogo2} alt="homelogo2" style={{ width: '100%', height: '600px' }} />
+                        <img src={HomeLogo2} alt="homelogo2" style={{ width: '100%', height: '650px' }} />
                     </div>
                     <div style={{ width: '100%', height: '300px' }}>
-                        <img src={HomeLogo3} alt="homelogo" style={{ width: '100%', height: '600px' }} />
+                        <img src={HomeLogo3} alt="homelogo" style={{ width: '100%', height: '650px' }} />
                     </div>
                     <div style={{ width: '100%', height: '300px' }}>
-                        <img src={HomeLogo4} alt="homelogo" style={{ width: '100%', height: '600px' }} />
+                        <img src={HomeLogo4} alt="homelogo" style={{ width: '100%', height: '650px' }} />
                     </div>
                     <div style={{ width: '100%', height: '300px' }}>
-                        <img src={HomeLogo5} alt="homelogo" style={{ width: '100%', height: '600px' }} />
+                        <img src={HomeLogo5} alt="homelogo" style={{ width: '100%', height: '650px' }} />
                     </div>
                 </Slider>
-                {/* <Fade {...fadeProperties} >
-                    <div className="each-fade">
-                        <div className="image-container">
-                            <img src={HomeLogo} alt="homelogo" />
-                        </div>
-                    </div>
-                    <div className="each-fade">
-                        <div className="image-container">
-                            <img src={HomeLogo2} alt="HomeLogo2" />
-                        </div>
-                    </div>
-                    <div className="each-fade">
-                        <div className="image-container" >
-                            <img src={HomeLogo5} alt="HomeLogo5" />
-                        </div>
-                    </div>
-                    <div className="each-fade">
-                        <div className="image-container" >
-                            <img src={HomeLogo3} alt="HomeLogo3" />
-                        </div>
-                    </div>
-                    <div className="each-fade">
-                        <div className="image-container" >
-                            <img src={HomeLogo4} alt="HomeLogo3" />
-                        </div>
-                    </div>
-                </Fade> */}
                 <div style={{ display: 'flex', margin: '0px 30px' }}>
                     <div style={{
                         width: '50%', margin: 'auto', padding: '0 100px',
@@ -530,20 +475,19 @@ class HomePage extends Component {
 
                     }}>Students are viewing</p>
                     <div style={{ margin: '0 25px' }} >
-                        {/* <ScrollMenu style={{ display: 'block', width: '80%', textAlign: 'left', zIndex: 9, marginLeft: '15px' }}
-                            // {this.props.token ? (parseInt(this.props.Role) === 2 ? courseList : "") : courseList1}
-                            data={this.props.token ? (parseInt(this.props.Role) === 2 ? courseList : "") : courseList1}
-                            arrowLeft={ArrowLeft}
-                            arrowRight={ArrowRight}
-
-                        /> */}
-
                         <Slider {...settings1}>
                             {this.props.token ?
                                 (parseInt(this.props.Role) === 2 ? this.state.courseData.map(x => <div style={{ height: 100 }}>{this.renderMedia(x)}</div>) : "")
                                 : this.state.courseData.map(x => <div style={{ height: 100 }}>{this.renderMedia(x)}</div>)}
                         </Slider>
                     </div>
+                </div>
+                <div style={{ textAlign: 'initial', marginTop: '10px' }}>
+                    <div style={{ color: '#686f7a', borderTop: '1px solid lightgray' }}>
+                        <img src={ulogo} alt="ulogo" style={{ height: '70px', width: '120px', margin: ' 0 31.5% 0 0' }}></img>
+                        Copyright © 2019 Udemy, Inc</div>
+                </div>
+                <div className="shadecolor1">
                 </div>
             </div>
         );

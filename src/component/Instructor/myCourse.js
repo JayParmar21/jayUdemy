@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Card, Button, CardImg, CardTitle, CardText, CardBody } from 'reactstrap';
+import {  Card, Button, CardImg, CardTitle, CardText, CardBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 
@@ -50,7 +50,7 @@ class MyCourse extends Component {
                     course.description = course.description.substring(0, 19) + "......"
                 }
                 return (
-                    <div key={course.id} className="abc1" style={{ height: '330px' }}>
+                    <div key={course.id} className="abc1" style={{ height: '330px',margin: '5px 7px' }}>
                         <Card>
                             <CardImg top style={{ height: "50%" }} onClick={this.btnExplore.bind(this, course.id)} src={path + course.courseImage} alt="Card image cap" />
                             <CardBody style={{ height: "50%" }}>
@@ -66,17 +66,17 @@ class MyCourse extends Component {
         }
 
         return (
-            <div>
-                <h3 className="marginTop">My Courses</h3>
-                <Container>
-                    <Button color="danger" className="btnnewcourse" style={{ marginLeft: '503px' }} outline onClick={this.btnNewCourse.bind(this)}>Add Course</Button>
-                </Container>
+            <div >
+                <h3 style={{marginBottom:'0rem'}}>My Courses</h3>
+                <div>
+                    <Button color="danger" className="btnnewcourse" style={{ margin: '24px 657px' }} outline onClick={this.btnNewCourse.bind(this)}>Add Course</Button>
+                </div>
                 <br />
-                <Container className="cnt">
+                <div className="cnt" style={{margin:'0 40px'}}>
                     <div style={{ display: 'block', width: '100%', textAlign: 'left' }}>
                         {courseList}
                     </div>
-                </Container>
+                </div>
             </div>
         )
     }

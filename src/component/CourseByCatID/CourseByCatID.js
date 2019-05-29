@@ -11,30 +11,17 @@ import * as catAction from '../../action/categoryAction'
 
 import path from '../../path'
 import '../../styling.css'
-import Slider from 'react-animated-slider';
 import 'react-animated-slider/build/horizontal.css';
 
-import HomeLogo from '../../Logo/hom.jpg';
-import HomeLogo2 from '../../Logo/hom2.jpg';
-import HomeLogo3 from '../../Logo/hom3.jpg';
-import HomeLogo4 from '../../Logo/hom4.jpg';
 import rupe from '../../Logo/rupee.png'
 import video from '../../Logo/video.png'
 import chapter from '../../Logo/chapter.png'
+import ulogo from '../../Logo/udemylogo.png'
 import { notification, Popover, Rate } from 'antd';
 
-const content = [
-    { image: HomeLogo },
-    { image: HomeLogo2 },
-    { image: HomeLogo3 },
-    { image: HomeLogo4 }
-];
 class CourseByCID extends Component {
 
     componentDidMount() {
-        // this.props.action.course.getCourse();
-        // this.props.action.category.getCourseByCID(this.props.match.params.cid);
-        // this.props.action.category.getCourseByCID(this.props.match.params.cid);
         this.props.action.course.getCourse();
         this.props.action.category.getCourseByCID(this.props.match.params.cid);
         this.props.action.rate.getAllRate();
@@ -42,15 +29,9 @@ class CourseByCID extends Component {
             this.props.action.cart.getCartByUser(parseInt(this.props.userId))
             this.props.action.cart.getBoughtCourseByUser(parseInt(this.props.userId));
         }
-
     }
     componentDidUpdate() {
-        this.props.action.category.getCourseByCID(this.props.match.params.cid);
-    }
-    componentWillMount() {
-        // this.props.action.course.getCourse();
-        // this.props.action.category.getCourseByCID(this.props.match.params.cid);
-        // this.props.action.rate.getAllRate();
+        //  this.props.action.category.getCourseByCID(this.props.match.params.cid);
     }
     btnAddChapter(courseId, e) {
         e.preventDefault();
@@ -155,11 +136,11 @@ class CourseByCID extends Component {
             return j
         })
         return (
-            <div key={course.id} className="abc1" style={{ height: '330px' }}>
-                <Card>
+            <div key={course.id} className="abc1" style={{ height: '330px', margin: '10px 0px' }}>
+                <Card style={{ width: '222px', margin: '0 4px' }}>
                     <Popover content={
                         <div style={{ width: '250px' }}>
-                            <div><h4>{course.coursename}</h4></div>
+                            <div><h5>{course.coursename}</h5></div>
                             <div>{course.description}</div>
                             <div style={{ marginTop: '10px' }}><h6><img src={video} alt="video" style={{ width: '14px', height: '14px', marginTop: '-4px', marginRight: '2px' }} />{course.lecture.split(',').length}<b style={{ marginLeft: '3px' }}>Lecture</b><img src={chapter} alt="video" style={{ width: '18px', height: '18px', marginTop: '-4px', marginLeft: '20px' }} /> {course.TotalChapter}<b style={{ marginLeft: '3px' }}>Chapter</b></h6></div>
                             <div style={{ marginTop: '15px' }}>
@@ -174,21 +155,16 @@ class CourseByCID extends Component {
                         <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
                     </Popover>
                     <CardBody style={{ height: "50%" }}>
-                        <CardTitle ><h2>{course.coursename}</h2></CardTitle>
-                        <CardText style={{ marginBottom: '-1px' }}><p style={{ marginBottom: '-1px' }}>{course.description1}</p></CardText>
-                        <div>
-                            <Rate allowHalf defaultValue={course.ratings} disabled className="anticon" />
-                            (<b style={{ fontSize: '16px', fontFamily: 'serif' }}>{j}</b>)
+                        <CardTitle ><h5 style={{ textAlign: 'initial' }}>{course.coursename}</h5></CardTitle>
+                        <CardText style={{ marginBottom: '-1px', textAlign: 'initial' }}>{course.description1}</CardText>
+                        <div style={{ textAlign: 'initial' }}>
+                            <Rate allowHalf defaultValue={course.ratings} disabled className="anticon" style={{ marginLeft: '-12px' }} />
+                            ({j})
                         </div>
-                        <div style={{ marginLeft: '140px', marginTop: '16px' }}>
-                            <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-18px' }} />
-                            <h5 style={{ marginTop: '-32px', marginLeft: '20px' }}>{course.rupee}</h5>
+                        <div style={{ marginLeft: '116px', marginTop: '30px' }}>
+                            <img src={rupe} alt="category" className="rupesIcon" style={{ marginTop: '-18px', marginLeft: '3px' }} />
+                            <h5 style={{ marginTop: '-32px', marginLeft: '18px' }}>{course.rupee}</h5>
                         </div>
-                        {/* {bought ? "" :
-                            ((addedToCart && loginCart) ?
-                                <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Add To Cart</Button>
-                                : <Button outline onClick={this.btnGoCart.bind(this)} style={{ marginLeft: '90px', marginTop: '-70px' }}>Go to Cart</Button>)
-                        } */}
                     </CardBody>
                 </Card>
 
@@ -199,21 +175,23 @@ class CourseByCID extends Component {
     render() {
 
         let courseList = [];
+        let catname = ""
         if (this.props.courses) {
             courseList = this.props.courses.map(course => {
-
+                let categoryname = course.category
+                catname = categoryname
                 let courselength = course.description.length.toString();
                 if (courselength > 20) {
                     course.description1 = course.description.substring(0, 19) + "......"
                 }
                 return (
-                    <div key={course.id} className="abc1" style={{ height: '330px' }}>
-                        <Card>
+                    <div key={course.id} style={{ height: '305px', margin: '10px 7px' }}>
+                        <Card style={{ margin: '0 0px' }}>
                             <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
                             <CardBody style={{ height: "50%" }}>
-                                <CardTitle ><h2>{course.coursename}</h2></CardTitle>
+                                <CardTitle ><h5 style={{ textAlign: 'initial' }}>{course.coursename}</h5></CardTitle>
                                 <CardText>{course.description1}</CardText>
-                                <Button outline color="info" onClick={this.btnAddChapter.bind(this, course.id)}>Add Chapter</Button>
+                                <Button outline color="info" onClick={this.btnAddChapter.bind(this, course.id)} style={{ margin: '8px -6px' }}>Add Chapter</Button>
                                 <Button outline color="danger" style={{ marginLeft: '35px' }} onClick={this.btnEdit.bind(this, course.id)}>Edit</Button>
                             </CardBody>
                         </Card>
@@ -221,7 +199,6 @@ class CourseByCID extends Component {
                 )
             })
         }
-
         let courseList1 = []
         if (this.props.courses) {
             this.props.courses.map(course => {
@@ -247,11 +224,11 @@ class CourseByCID extends Component {
                     return j
                 })
                 return (
-                    <div key={course.id} className="abc1" style={{ height: '330px' }}>
-                        <Card>
+                    <div key={course.id} style={{ height: '330px', margin: '10px 0px' }}>
+                        <Card style={{ width: '222px', margin: '0 4px' }}>
                             <Popover content={
                                 <div style={{ width: '250px' }}>
-                                    <div><h4>{course.coursename}</h4></div>
+                                    <div><h5>{course.coursename}</h5></div>
                                     <div>{course.description}</div>
                                     <div style={{ marginTop: '10px' }}><h6><img src={video} alt="video" style={{ width: '14px', height: '14px', marginTop: '-4px', marginRight: '2px' }} />{course.lecture.split(',').length}<b style={{ marginLeft: '3px' }}>Lecture</b><img src={chapter} alt="video" style={{ width: '18px', height: '18px', marginTop: '-4px', marginLeft: '20px' }} /> {course.TotalChapter}<b style={{ marginLeft: '3px' }}>Chapter</b></h6></div>
                                     <div style={{ marginTop: '15px' }}>
@@ -262,48 +239,44 @@ class CourseByCID extends Component {
                                 <CardImg style={{ height: "50%" }} top src={path + course.courseImage} onClick={this.btnExplore.bind(this, course.id)} alt="Card image cap" />
                             </Popover>
                             <CardBody style={{ height: "50%" }}>
-                                <CardTitle ><h2>{course.coursename}</h2></CardTitle>
-                                <CardText style={{ marginBottom: '-1px' }}><p style={{ marginBottom: '-1px' }}>{description1}</p></CardText>
-                                <div>
-                                    <Rate allowHalf defaultValue={course.ratings} disabled />
-                                    (<b style={{ fontSize: '16px', fontFamily: 'serif' }}>{j}</b>)
+                                <CardTitle ><h5 style={{ textAlign: 'initial' }}>{course.coursename}</h5></CardTitle>
+                                <CardText style={{ marginBottom: '-1px', textAlign: 'initial' }}>{description1}</CardText>
+                                <div style={{ textAlign: 'initial' }}>
+                                    <Rate allowHalf defaultValue={course.ratings} disabled className="anticon" style={{ marginLeft: '-12px' }} />
+                                    ({j})
+                                 </div>
+                                <div style={{ marginLeft: '116px', marginTop: '40px' }}>
+                                    <img src={rupe} alt="category" style={{ marginTop: '-18px', marginLeft: '3px' }} className="rupesIcon" />
+                                    <h5 style={{ marginTop: '-32px', marginLeft: '18px' }}>{course.rupee}</h5>
                                 </div>
-                                <div style={{ marginLeft: '140px', marginTop: '16px' }}>
-                                    <img src={rupe} alt="category" style={{ marginTop: '-18px' }} className="rupesIcon" />
-                                    <h5 style={{ marginTop: '-32px', marginLeft: '20px' }}>{course.rupee}</h5>
-                                </div>
-                                {/* <Button outline color="danger" onClick={this.btnAddToCart.bind(this, course.id)} style={{ marginLeft: '90px', marginTop: '-70px' }} >Add To Cart</Button> */}
                             </CardBody>
                         </Card>
                     </div>
                 )
             })
         }
-
-        let sliderimg = []
-        sliderimg = content.map((item, index) => {
-            return (
-                <div key={index} className="slider-content"
-                    style={{ background: `url('${item.image}') no-repeat center center`, height: '100%' }}>
-                </div>
-            )
-        })
         return (
 
             <div className="hrelative">
-                {/* <Slider className="slider-wrapper" >
-                    {sliderimg}
-                </Slider> */}
-
-                <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left' }}>
+                <div className="shadecolor">
+                </div>
+                <div style={{ fontSize: '36px', fontFamily: 'inherit', textAlign: 'initial', color: '#ffffff', margin: '-72px 0px 34px 145px' }}>
+                    {catname}
+                </div>
+                <div className="homediv" style={{ display: 'block', width: '95%', textAlign: 'left', margin: '10px 142px' }}>
                     {this.props.token ? (parseInt(this.props.Role) === 1 ? courseList : courseList1) : courseList2}
                 </div>
+                <div style={{ textAlign: 'initial', marginTop: '142px' }}>
+                    <div style={{ color: '#686f7a', borderTop: '1px solid lightgray' }}>
+                        <img src={ulogo} alt="ulogo" style={{ height: '70px', width: '120px', margin: ' 0 31.5% 0 0' }}></img>
+                        Copyright © 2019 Udemy, Inc</div>
+                </div>
+                <div className="shadecolor1">
 
+                </div>
             </div>
-
         )
     }
-
 }
 const mapStateToProps = state => {
     return {

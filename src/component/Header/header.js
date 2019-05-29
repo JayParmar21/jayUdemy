@@ -189,14 +189,6 @@ class Header extends Component {
                 return <DropdownItem key={cat.id} onClick={this.onSelect.bind(this, cat.id)}>{cat.name}</DropdownItem>
             })
         }
-
-        let categories1 = "";
-        if (this.props.category) {
-            categories1 = this.props.category.map(cat => {
-                return <NavLink key={cat.id} onClick={this.onSelect.bind(this, cat.id)}>{cat.name}</NavLink>
-
-            })
-        }
         return (
             <div className="header" style={{ marginTop: '-75px' }}>
                 <Login isOpen={this.state.LoginModal} toggle={this.toggleLogin.bind(this)} toggleModals={this.toggleLinks.bind(this)}></Login>{' '}
